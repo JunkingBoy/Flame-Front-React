@@ -1,0 +1,46 @@
+import { BASE_URL, axiosInstance } from "../config/HeaderInstance";
+import { LoginResponse, RegisterResponse } from "../interface/UserInterface";
+// import { initEncryptionKey, encryptData } from "../utils/Crypt";
+
+async function login(username: string, password: string): Promise<LoginResponse> {
+    // // 密钥初始化
+    // await initEncryptionKey();
+    // // 加密密码
+    // let {ciphertext, iv} = await encryptData(password);
+
+    // // 加密后数据转为base64
+    // let encryptedPasswordBase64 = btoa(
+    //     Array.from(new Uint8Array(ciphertext))
+    //         .map(byte => String.fromCharCode(byte))
+    //         .join('')
+    // );
+
+    // let ivBase64 = btoa(
+    //     Array.from(new Uint8Array(iv))
+    //         .map(byte => String.fromCharCode(byte))
+    //         .join('')
+    // );
+
+    let response: any = await axiosInstance.post(`${BASE_URL}/user`, {
+        username: username,
+        encryptedPassword: password,
+        // iv: ivBase64,
+    });
+    
+    return response;
+}
+
+async function register(email: string, phone: number, password: string, confirmPassword: string): Promise<RegisterResponse> {
+    let response: any = await axiosInstance.put(`${BASE_URL}/user`, {
+        email: email,
+        phoneNumber: phone.toString(),
+        firstPassword: password,
+        confirmPassword: confirmPassword
+    });
+
+    console.log("1111111", response.status);
+
+    return response;
+}
+
+export { login, register }
