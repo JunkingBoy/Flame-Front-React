@@ -27,7 +27,7 @@ async function login(username: string, password: string): Promise<LoginResponse>
         // iv: ivBase64,
     });
     
-    return response;
+    return response.data;
 }
 
 async function register(email: string, phone: number, password: string, confirmPassword: string): Promise<RegisterResponse> {
@@ -38,9 +38,7 @@ async function register(email: string, phone: number, password: string, confirmP
         confirmPassword: confirmPassword
     });
 
-    console.log("1111111", response.status);
-
-    return response;
+    return response.data;
 }
 
 export { login, register }
