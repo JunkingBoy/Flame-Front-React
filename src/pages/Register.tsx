@@ -7,7 +7,7 @@ import { RegisterResponse } from '../interface/UserInterface';
 
 const { Content } = Layout;
 
-export default function Register() {
+const Register: React.FC = () => {
   let [registerMessage, setRegisterMessage] = useState<string | null>(null);
   let [emailMessage, setEmailMessage] = useState<string | null>(null);
   let [phoneMessage, setPhoneMessage] = useState<string | null>(null);
@@ -95,3 +95,5 @@ export default function Register() {
     </Layout>
   );
 }
+
+export default Register;

@@ -28,8 +28,10 @@ const Login: React.FC = () => {
 
             if (response.status === 200) {
                 //本地存储token
+                const id = response.id.toString();
                 const token = response.token;
 
+                localStorage.setItem('user_id', id);
                 localStorage.setItem('token', token);
                 navigate('/home');
                 setLoginMessage('Login Successful');

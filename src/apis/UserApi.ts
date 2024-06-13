@@ -1,5 +1,5 @@
 import { BASE_URL, axiosInstance } from "../config/HeaderInstance";
-import { LoginResponse, RegisterResponse } from "../interface/UserInterface";
+import { LoginResponse, RegisterResponse, UserInfoResponse } from "../interface/UserInterface";
 // import { initEncryptionKey, encryptData } from "../utils/Crypt";
 
 async function login(username: string, password: string): Promise<LoginResponse> {
@@ -41,4 +41,14 @@ async function register(email: string, phone: number, password: string, confirmP
     return response.data;
 }
 
-export { login, register }
+async function getUserInfo(userId: number): Promise<UserInfoResponse> {
+    let response: any = await axiosInstance.get(`${BASE_URL}/user`, {
+        params: {
+            userId: userId
+        }
+    });
+
+    return response.data;
+}
+
+export { login, register, getUserInfo }
