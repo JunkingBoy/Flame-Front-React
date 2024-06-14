@@ -7,7 +7,7 @@ interface RegisterData {
     message: string;
 }
 
-interface UserProData {
+interface UserProBugData {
     name: string;
     pv: number;
     uv: number;
@@ -25,11 +25,11 @@ interface RegisterResponse {
     data: RegisterData[];
 }
 
-interface UserInfoResponse {
+interface UserBugInfoResponse {
     id: number,
     user: string,
     status: number,
-    data: UserProData[]
+    data: UserProBugData[]
 }
 
-export type { LoginResponse, RegisterResponse, UserProData, UserInfoResponse }
+export type { LoginResponse, RegisterResponse, UserProBugData, UserBugInfoResponse }
