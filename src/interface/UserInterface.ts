@@ -9,8 +9,9 @@ interface RegisterData {
 
 interface UserProBugData {
     name: string;
-    pv: number;
-    uv: number;
+    finishBug: number;
+    allBug: number;
+    amt: number;
 }
 
 interface LoginResponse {
