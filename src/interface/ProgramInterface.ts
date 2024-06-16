@@ -1,5 +1,9 @@
 interface ProgramInfo {
-    name: string;
+    programName: string;
+    allBug: number;
+    finishBug: number;
+    unWorkBug: number;
+    isNotBug: number;
 }
 
 interface ProgramReponse {
@@ -9,4 +13,4 @@ interface ProgramReponse {
     data: ProgramInfo[]
 }
 
-export type { ProgramReponse }
+export type { ProgramReponse, ProgramInfo }

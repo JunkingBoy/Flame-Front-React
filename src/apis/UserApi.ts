@@ -52,12 +52,18 @@ async function getUserBugInfo(userId: number): Promise<UserBugInfoResponse> {
     return response.data;
 }
 
-async function getUserProBugInfo(userId: number): Promise<ProgramReponse> {
+async function getUserProBugInfo(userId: number, programName?: string): Promise<ProgramReponse> {
+    let params: any = {
+        userId: userId,
+        status: 1
+    };
+
+    if (programName !== undefined) {
+        params.program = programName
+    }
+
     let response: any = await axiosInstance.get(`${BASE_URL}/program/status`, {
-        params: {
-            userId: userId,
-            status: 1
-        }
+        params
     });
 
     return response.data;

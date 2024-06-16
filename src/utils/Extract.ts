@@ -1,7 +1,12 @@
-import { UserProBugData } from "../interface/UserInterface";
+import { UserProBugData  } from "../interface/UserInterface";
+import { ProgramInfo } from "../interface/ProgramInterface";
 
-function extractProNames(programs: UserProBugData[]): string[] {
-    return programs.map(program => program.name);
+function extractDateBugInfo(programs: UserProBugData[]): string[] {
+    return programs.map(program => program.datetime);
 }
 
-export { extractProNames }
+function extractProNames(programs: ProgramInfo[]): string[] {
+    return programs.map(program => program.programName);
+}
+
+export { extractDateBugInfo, extractProNames }

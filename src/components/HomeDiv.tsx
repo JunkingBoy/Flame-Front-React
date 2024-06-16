@@ -10,15 +10,38 @@ import {
   } from "recharts";
 
 import { UserProBugData } from "../interface/UserInterface";
+import { HeaderSiderProps } from "../interface/MenuInterface";
 
-const HomeHeaderDiv: React.FC = () => {
+import { HeaderSider } from "./Menu";
+
+const HomeHeaderDiv: React.FC<HeaderSiderProps> = ({ programNameList }) => {
     return (
         <div style={homeHeaderStyle}>
-            
+            <HeaderSider programNameList={programNameList} />
+            <div>Column 2</div>
+            <div>Column 3</div>
         </div>
     );
 }
 
+/**
+ * @description 绘出平面直角坐标系柱状图
+ * CartesianGrid组件:
+ * 绘制直角坐标系的网格,strokeDasharray="3 3"定义了网格线为虚线样式,每个实线段3px,之后紧跟3px的空白.
+ * XAxis组件:
+ * x轴相关内容,datakey代表x轴数据对应的键名.tick={true}表示显示刻度线
+ * YAxis组件:
+ * 简单y轴组件.没有显示数据范围
+ * Tooltip组件:
+ * 提示框功能,当用户点击条形时（由trigger="click"定义）显示详细信息.
+ * shared={false}意味着每次只显示被点击条形的数据详情
+ * Bar组件:
+ * 两个条形系列,分别对应allBug和finishBug数据键.
+ * 它们共享同一个堆叠标识stackId='a',意味着这两个系列会堆叠显示.
+ * fill属性设置了条形的颜色
+ * @param pagedata
+ * @returns null
+ */
 const HomeContentDiv: React.FC<{ pagedata: UserProBugData[] }> = ({pagedata}) => {
     return (
         <div style={homeContentStyle}>
@@ -36,7 +59,7 @@ const HomeContentDiv: React.FC<{ pagedata: UserProBugData[] }> = ({pagedata}) =>
             >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis
-                    dataKey="name"
+                    dataKey="datetime"
                     tick={true}
                 />
                 <YAxis />

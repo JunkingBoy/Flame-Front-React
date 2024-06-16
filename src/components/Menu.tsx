@@ -10,7 +10,11 @@ import {
     FundFilled,
     BugFilled,
     SignalFilled,
+    DollarOutlined
   } from '@ant-design/icons';
+
+import { HeaderSiderProps } from '../interface/MenuInterface';
+import { headerSiderDiv, headerSiderDivMenu } from './Menu.module';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -60,4 +64,28 @@ const SiderMenu: React.FC = () => {
     );
 }
 
-export default SiderMenu;
+const HeaderSider: React.FC<HeaderSiderProps> = ({ programNameList }) => {
+    const items: MenuItem[] = programNameList.map((proName, proIndex) => {
+        let key: string = `sub${proIndex + 1}`;
+        return {
+            key,
+            label: proName,
+            icon: <DollarOutlined />,
+        }
+    });
+
+    return (
+        <div style={headerSiderDiv}>
+            <Menu 
+                theme="light"
+                defaultSelectedKeys={['sub1']}
+                defaultOpenKeys={['sub1']}
+                mode="inline"
+                items={items}
+                style={headerSiderDivMenu}
+            />
+        </div>
+    );
+}
+
+export {SiderMenu, HeaderSider};

@@ -8,7 +8,7 @@ import { extractProNames } from '../utils/Extract';
 import hotflame from '../images/hotflame.png';
 
 import { homeWrapperStyle } from './Home.module';
-import SiderMenu from '../components/Menu';
+import { SiderMenu } from '../components/Menu';
 import { HomeHeaderDiv, HomeContentDiv, HomeRightDiv } from '../components/HomeDiv';
 
 const { Sider } = Layout;
@@ -17,10 +17,7 @@ const Home: React.FC = () => {
     let [pageData, setPageData] = useState<UserProBugData[]>([]);
     let [isLoading, setIsLoding] = useState(true);
     let [collapsed, setCollapsed] = useState(false);
-    
-    let contentRef = useRef(null);
-    let headerRef = useRef(null);
-    let contentRightRef = useRef(null);
+    let [arrayProName, setArrayProName] = useState<string[]>([]);
 
     // 只取前七条数据
     const fetchUserInfo = async () => {
@@ -34,8 +31,8 @@ const Home: React.FC = () => {
                 let newBugCount: UserProBugData[] = response.data.slice(0, 7);
                 setPageData(newBugCount);
                 // 存储
-                let programNameList: string[] = extractProNames(response.data)
-                localStorage.setItem('program', programNameList.toString());
+                // let programNameList: string[] = extractDateBugInfo(response.data)
+                // localStorage.setItem('program', programNameList.toString());
             } else {
                 console.log('Fetch data fail!');
             }
@@ -52,7 +49,12 @@ const Home: React.FC = () => {
             let response: ProgramReponse = await getUserProBugInfo(Number(localStorage.getItem('user_id')));
 
             if (response.status == 200) {
-                // 设置data为数据展示部分
+                /**
+                 * 第一次调用获取到全部status为1的项目数据
+                 * 将项目名称转为数组传递到子组件中进行展示
+                 */
+                let proNameList: string[] = extractProNames(response.data);
+                setArrayProName(proNameList);
             } else {
                 console.log('Fetch program data fail!');
             }
@@ -85,7 +87,7 @@ const Home: React.FC = () => {
             </Sider>
             <div style={homeWrapperStyle}>
                 <div>
-                    <HomeHeaderDiv />
+                    <HomeHeaderDiv programNameList={arrayProName} />
                     <HomeContentDiv pagedata={pageData} />
                 </div>
                 <HomeRightDiv />

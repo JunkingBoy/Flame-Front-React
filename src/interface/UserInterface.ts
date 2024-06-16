@@ -8,7 +8,7 @@ interface RegisterData {
 }
 
 interface UserProBugData {
-    name: string;
+    datetime: string;
     finishBug: number;
     allBug: number;
     amt: number;

@@ -8,12 +8,15 @@ const homeWrapperStyle: React.CSSProperties = {
 };
 
 const homeHeaderStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'row',
     minHeight: 250,
     width: 1000,
     margin: '20px 20px 10px 20px',
     padding: 24,
     paddingBottom: 0,
-    boxShadow: '0 4px 10px 2px rgba(0, 0, 0, 0.5)'
+    boxShadow: '0 4px 10px 2px rgba(0, 0, 0, 0.5)',
+        justifyContent: 'space-between'
 }
 
 const homeContentStyle: React.CSSProperties = {
