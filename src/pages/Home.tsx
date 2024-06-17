@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout } from 'antd';
 
 import { getUserBugInfo, getUserProBugInfo } from '../apis/UserApi';
 import { UserProBugData, UserBugInfoResponse } from '../interface/UserInterface';
 import { ProgramReponse } from '../interface/ProgramInterface';
-import { extractProNames } from '../utils/Extract';
+import { ExtractProToPieData } from '../interface/ExtractInterface';
+import { extractProNames, extractProToPie } from '../utils/Extract';
 import hotflame from '../images/hotflame.png';
 
 import { homeWrapperStyle } from './Home.module';
@@ -18,6 +19,8 @@ const Home: React.FC = () => {
     let [isLoading, setIsLoding] = useState(true);
     let [collapsed, setCollapsed] = useState(false);
     let [arrayProName, setArrayProName] = useState<string[]>([]);
+    let [headerPieData, setHeaderPieData] = useState<ExtractProToPieData[]>([]);
+    let [isDataReady, setIsDataReady] = useState(false);
 
     // 只取前七条数据
     const fetchUserInfo = async () => {
@@ -55,6 +58,8 @@ const Home: React.FC = () => {
                  */
                 let proNameList: string[] = extractProNames(response.data);
                 setArrayProName(proNameList);
+                let pieDataList: ExtractProToPieData[] = extractProToPie(response.data);
+                setHeaderPieData(pieDataList);
             } else {
                 console.log('Fetch program data fail!');
             }
@@ -87,7 +92,7 @@ const Home: React.FC = () => {
             </Sider>
             <div style={homeWrapperStyle}>
                 <div>
-                    <HomeHeaderDiv programNameList={arrayProName} />
+                    <HomeHeaderDiv programNameList={arrayProName} pagePieDataObj={headerPieData} />
                     <HomeContentDiv pagedata={pageData} />
                 </div>
                 <HomeRightDiv />

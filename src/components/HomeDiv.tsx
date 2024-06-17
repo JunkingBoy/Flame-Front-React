@@ -1,4 +1,5 @@
-import { homeHeaderStyle, homeContentStyle, homeContentRightStyle } from "../pages/Home.module";
+import { useEffect, useState } from "react";
+import { homeHeaderStyle, homeContentStyle, homeContentRightStyle, homeHeaderContentStyle } from "../pages/Home.module";
 import {
     BarChart,
     Bar,
@@ -10,16 +11,34 @@ import {
   } from "recharts";
 
 import { UserProBugData } from "../interface/UserInterface";
-import { HeaderSiderProps } from "../interface/MenuInterface";
+import { HeaderDataProps } from "../interface/MenuInterface";
+import { ExtractProToPie } from "../interface/ExtractInterface";
 
 import { HeaderSider } from "./Menu";
+import { HeaderContentPie } from "./HeaderContentPie";
 
-const HomeHeaderDiv: React.FC<HeaderSiderProps> = ({ programNameList }) => {
+import { extractPieData } from "../utils/Extract";
+
+const HomeHeaderDiv: React.FC<HeaderDataProps> = ({ programNameList, pagePieDataObj }) => {
+    let [currentPro, setCurrentPro] = useState<string>('');
+    let [currentPieData, setCurrentPieData] = useState<ExtractProToPie[]>([]);
+
+    useEffect(() => {
+        let firstPagePieData: ExtractProToPie[] = extractPieData(currentPro, pagePieDataObj);
+        setCurrentPieData(firstPagePieData);
+    }, [currentPro]);
+
+    const headerMenuClick = (proName: string) => {
+        setCurrentPro(proName);
+    }
+
     return (
         <div style={homeHeaderStyle}>
-            <HeaderSider programNameList={programNameList} />
-            <div>Column 2</div>
-            <div>Column 3</div>
+            <HeaderSider programNameList={programNameList} onProClick={headerMenuClick} />
+            <div style={homeHeaderContentStyle}>
+                <HeaderContentPie data={currentPieData} />
+                <div>Column 3</div>
+            </div>
         </div>
     );
 }
@@ -42,7 +61,7 @@ const HomeHeaderDiv: React.FC<HeaderSiderProps> = ({ programNameList }) => {
  * @param pagedata
  * @returns null
  */
-const HomeContentDiv: React.FC<{ pagedata: UserProBugData[] }> = ({pagedata}) => {
+const HomeContentDiv: React.FC<{ pagedata: UserProBugData[] }> = ({ pagedata }) => {
     return (
         <div style={homeContentStyle}>
             <BarChart

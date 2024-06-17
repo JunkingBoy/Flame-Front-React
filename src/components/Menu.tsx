@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu } from 'antd';
 import type { MenuProps } from 'antd';
@@ -64,7 +64,7 @@ const SiderMenu: React.FC = () => {
     );
 }
 
-const HeaderSider: React.FC<HeaderSiderProps> = ({ programNameList }) => {
+const HeaderSider: React.FC<HeaderSiderProps> = ({ programNameList, onProClick }) => {
     const items: MenuItem[] = programNameList.map((proName, proIndex) => {
         let key: string = `sub${proIndex + 1}`;
         return {
@@ -73,6 +73,20 @@ const HeaderSider: React.FC<HeaderSiderProps> = ({ programNameList }) => {
             icon: <DollarOutlined />,
         }
     });
+
+    /**
+     * 这里希望直接传入label作为参数
+     * 需要操作的是key的字符串 -> 通过索引拿到proName
+     * key.replace('sub', '') -> 移除'sub'前缀
+     * parseInt(..., 10)将剩余的字符串转换为十进制整数,并减去1
+     * @param label
+     */
+    const menuClick: MenuProps['onClick'] = ({ key }) => {
+        let index: number = parseInt(key.replace('sub', ''), 10) - 1;
+        if (index >= 0 && index < programNameList.length) {
+            onProClick(programNameList[index]);
+        }
+    };
 
     return (
         <div style={headerSiderDiv}>
@@ -83,6 +97,7 @@ const HeaderSider: React.FC<HeaderSiderProps> = ({ programNameList }) => {
                 mode="inline"
                 items={items}
                 style={headerSiderDivMenu}
+                onClick={menuClick}
             />
         </div>
     );

@@ -3,8 +3,7 @@ const headerSiderDiv: React.CSSProperties = {
     overflow: 'auto',
     width: '156px',
     borderRadius: '8px',
-    backgroundColor: 'white',
-    boxShadow: '0 4px 10px 2px rgba(0, 0, 0, 0.3)'
+    backgroundColor: 'white'
 }
 
 const headerSiderDivMenu: React.CSSProperties = {

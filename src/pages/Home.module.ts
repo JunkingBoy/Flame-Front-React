@@ -19,6 +19,16 @@ const homeHeaderStyle: React.CSSProperties = {
         justifyContent: 'space-between'
 }
 
+const homeHeaderContentStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexGrow: 1,
+    margin: '0 0 48px 30px',
+    borderRadius: '8px',
+    backgroundColor: 'white',
+        justifyContent: 'space-between'
+}
+
 const homeContentStyle: React.CSSProperties = {
     minHeight: 600,
     width: 1000,
@@ -37,4 +47,4 @@ const homeContentRightStyle: React.CSSProperties = {
     boxShadow: '0 4px 10px 2px rgba(0, 0, 0, 0.5)'
 }
 
-export {homeWrapperStyle, homeHeaderStyle, homeContentStyle, homeContentRightStyle}
+export {homeWrapperStyle, homeHeaderStyle, homeContentStyle, homeContentRightStyle, homeHeaderContentStyle}

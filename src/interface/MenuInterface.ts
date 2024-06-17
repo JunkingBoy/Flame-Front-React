@@ -1,5 +1,13 @@
+import { ExtractProToPieData } from "./ExtractInterface";
+
 interface HeaderSiderProps {
     programNameList: string[];
+    onProClick: (proName: string) => void;
 }
 
-export type { HeaderSiderProps }
+interface HeaderDataProps {
+    programNameList: string[];
+    pagePieDataObj: ExtractProToPieData[];
+}
+
+export type { HeaderDataProps, HeaderSiderProps }
