@@ -24,9 +24,14 @@ const HomeHeaderDiv: React.FC<HeaderDataProps> = ({ programNameList, pagePieData
     let [currentPieData, setCurrentPieData] = useState<ExtractProToPie[]>([]);
 
     useEffect(() => {
-        let firstPagePieData: ExtractProToPie[] = extractPieData(currentPro, pagePieDataObj);
-        setCurrentPieData(firstPagePieData);
-    }, [currentPro]);
+        if (currentPro === undefined || currentPro === '') {
+            let firstPagePieData: ExtractProToPie[] = extractPieData(programNameList[0], pagePieDataObj);
+            setCurrentPieData(firstPagePieData);
+        } else {
+            let firstPagePieData: ExtractProToPie[] = extractPieData(currentPro, pagePieDataObj);
+            setCurrentPieData(firstPagePieData);
+        }
+    }, [currentPro, programNameList]);
 
     const headerMenuClick = (proName: string) => {
         setCurrentPro(proName);
