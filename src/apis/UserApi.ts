@@ -1,6 +1,6 @@
 import { BASE_URL, axiosInstance } from "../config/HeaderInstance";
-import { LoginResponse, RegisterResponse, UserBugInfoResponse } from "../interface/UserInterface";
-import { ProgramReponse } from "../interface/ProgramInterface";
+import { LoginResponse, RegisterResponse, UserBugInfoResponse, UserCarDataResponse } from "../interface/UserInterface";
+import { ProgramReponse, ProgramBugDetailResponse } from "../interface/ProgramInterface";
 // import { initEncryptionKey, encryptData } from "../utils/Crypt";
 
 async function login(username: string, password: string): Promise<LoginResponse> {
@@ -69,4 +69,24 @@ async function getUserProBugInfo(userId: number, programName?: string): Promise<
     return response.data;
 }
 
-export { login, register, getUserBugInfo, getUserProBugInfo }
+async function getUserCareerInfo(userId: number): Promise<UserCarDataResponse> {
+    let response: any = await axiosInstance.get(`${BASE_URL}/userCareer`, {
+        params: {
+            userId: userId
+        }
+    });
+
+    return response.data;
+}
+
+async function getUserProBugDetail(userId: number): Promise<ProgramBugDetailResponse> {
+    let response: any = await axiosInstance.get(`${BASE_URL}/program/bug`, {
+        params: {
+            userId: userId
+        }
+    });
+
+    return response.data;
+}
+
+export { login, register, getUserBugInfo, getUserProBugInfo, getUserCareerInfo, getUserProBugDetail }

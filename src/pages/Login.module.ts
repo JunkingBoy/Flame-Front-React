@@ -15,7 +15,7 @@ const loginContainer: React.CSSProperties = {
   height: 315,
   margin: '0 auto',
   marginTop: '10%',
-  borderRadius: '15px',
+  borderRadius: 16,
   boxShadow: '0 10px 50px 0px rbg(59, 45, 159)',
   backgroundColor: 'rgb(95, 76, 194)'
 }

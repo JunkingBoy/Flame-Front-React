@@ -14,6 +14,12 @@ interface UserProBugData {
     amt: number;
 }
 
+interface UserCareerData {
+    subject: string;
+    A: number;
+    fullMark: number;
+}
+
 interface LoginResponse {
     id: number,
     token: string;
@@ -33,4 +39,11 @@ interface UserBugInfoResponse {
     data: UserProBugData[]
 }
 
-export type { LoginResponse, RegisterResponse, UserProBugData, UserBugInfoResponse }
+interface UserCarDataResponse {
+    id: number,
+    user: string,
+    status: number,
+    data: UserCareerData[]
+}
+
+export type { LoginResponse, RegisterResponse, UserProBugData, UserBugInfoResponse, UserCarDataResponse, UserCareerData }

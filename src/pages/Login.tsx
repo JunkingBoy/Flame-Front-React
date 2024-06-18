@@ -46,7 +46,6 @@ const Login: React.FC = () => {
 
     return (
         <Layout className='login-style' style={loginContainer}>
-            
             <Content className='left-inline-style' style={leftContainer}>
                 <Form
                     name='normal-login'

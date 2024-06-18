@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Layout } from 'antd';
 
-import { getUserBugInfo, getUserProBugInfo } from '../apis/UserApi';
-import { UserProBugData, UserBugInfoResponse } from '../interface/UserInterface';
-import { ProgramReponse } from '../interface/ProgramInterface';
+import { getUserBugInfo, getUserProBugInfo, getUserCareerInfo, getUserProBugDetail } from '../apis/UserApi';
+import { UserProBugData, UserBugInfoResponse, UserCareerData, UserCarDataResponse } from '../interface/UserInterface';
+import { ProgramReponse, ProgramBugDetail, ProgramBugDetailResponse } from '../interface/ProgramInterface';
 import { ExtractProToPieData } from '../interface/ExtractInterface';
-import { extractProNames, extractProToPie } from '../utils/Extract';
+import { extractProNames, extractProToPie, extractAllProName } from '../utils/Extract';
 import hotflame from '../images/hotflame.png';
 
 import { homeWrapperStyle } from './Home.module';
@@ -20,15 +20,16 @@ const Home: React.FC = () => {
     let [collapsed, setCollapsed] = useState(false);
     let [arrayProName, setArrayProName] = useState<string[]>([]);
     let [headerPieData, setHeaderPieData] = useState<ExtractProToPieData[]>([]);
-    let [isDataReady, setIsDataReady] = useState(false);
+    let [userCareerData, setUserCareerData] = useState<UserCareerData[]>([]);
+    let [userName, setUserName] = useState<string>('');
+    let [underData, setUnderData] = useState<ProgramBugDetail[]>([]);
+    let [allProName, setAllProName] = useState<string[]>([]);
 
     // 只取前七条数据
     const fetchUserInfo = async () => {
         try {
-            let userId: number = Number(localStorage.getItem('user_id'));
-
             // 这里应该只拿到最近七天的Bug信息 -> 返回值前七条数据
-            let response: UserBugInfoResponse = await getUserBugInfo(userId);
+            let response: UserBugInfoResponse = await getUserBugInfo(Number(localStorage.getItem('user_id')));
 
             if (response.status == 200) {
                 let newBugCount: UserProBugData[] = response.data.slice(0, 7);
@@ -70,9 +71,46 @@ const Home: React.FC = () => {
         }
     }
 
+    const fetchUserCareerInfo = async () => {
+        try {
+            let response: UserCarDataResponse = await getUserCareerInfo(Number(localStorage.getItem('user_id')));
+
+            if (response.status == 200) {
+                setUserName(response.user);
+                setUserCareerData(response.data);
+            } else {
+                console.log('Fetch user career data fail!');
+            }
+        } catch (error) {
+            console.log('Error fetching data:', error);
+        } finally {
+            setIsLoding(false);
+        }
+    }
+
+    const fetchUserUnderInfo = async () => {
+        try {
+            let response: ProgramBugDetailResponse = await getUserProBugDetail(Number(localStorage.getItem('user_id')));
+
+            if (response.status == 200) {
+                let proNameList: string[] = extractAllProName(response.data);
+                setAllProName(proNameList);
+                setUnderData(response.data);
+            } else {
+                console.log('Fetch user bug program detail data fail!');
+            }
+        } catch (error) {
+            console.log('Error fetching data:', error);
+        } finally {
+            setIsLoding(false);
+        }
+    }
+
     useEffect(() => {
         fetchUserInfo();
         fetchUserProInfo();
+        fetchUserCareerInfo();
+        fetchUserUnderInfo();
     }, []);
 
     /**
@@ -95,7 +133,7 @@ const Home: React.FC = () => {
                     <HomeHeaderDiv programNameList={arrayProName} pagePieDataObj={headerPieData} />
                     <HomeContentDiv pagedata={pageData} />
                 </div>
-                <HomeRightDiv />
+                <HomeRightDiv user={userName} radarData={userCareerData} allProList={allProName} proDetailData={underData} />
             </div>
         </Layout>
     );

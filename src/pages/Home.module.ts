@@ -24,12 +24,14 @@ const homeHeaderContentStyle: React.CSSProperties = {
     flexDirection: 'row',
     flexGrow: 1,
     margin: '0 0 48px 30px',
-    borderRadius: '8px',
+    borderRadius: 8,
     backgroundColor: 'white',
-        justifyContent: 'space-between'
+    justifyContent: 'space-between'
 }
 
 const homeContentStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
     minHeight: 600,
     width: 1000,
     margin: '20px 20px 20px 20px',
@@ -39,12 +41,37 @@ const homeContentStyle: React.CSSProperties = {
 }
 
 const homeContentRightStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
     minHeight: 600,
     width: 580,
     margin: '20px 20px 34px 10px',
     padding: 24,
     paddingBottom: 0,
-    boxShadow: '0 4px 10px 2px rgba(0, 0, 0, 0.5)'
+    boxShadow: '0 4px 10px 2px rgba(0, 0, 0, 0.5)',
+    gap: '10px' // 子元素之间间距
 }
 
-export {homeWrapperStyle, homeHeaderStyle, homeContentStyle, homeContentRightStyle, homeHeaderContentStyle}
+const homeRightStyleInlineTop: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '530px',
+    height: '230px',
+    padding: 24,
+    borderRadius: 8,
+    backgroundColor: 'white',
+    justifyContent: 'space-between'
+}
+
+const homeRightStyleInlineUnder: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '530px',
+    height: '540px',
+    padding: 24,
+    borderRadius: 8,
+    backgroundColor: 'white',
+    justifyContent: 'space-between'
+}
+
+export {homeWrapperStyle, homeHeaderStyle, homeContentStyle, homeContentRightStyle, homeHeaderContentStyle, homeRightStyleInlineTop, homeRightStyleInlineUnder}
