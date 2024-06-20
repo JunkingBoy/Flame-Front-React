@@ -1,0 +1,35 @@
+@keyframes anim1 {
+    0%{
+        transform: translateY(300%);
+    }
+    100%{
+        transform: translateY(-300%);  
+    }
+}
+
+@keyframes anim2 {
+    0%{
+        transform: translateX(300%);
+    }
+    100%{
+        transform: translateX(-300%);
+        
+    }
+}
+
+@keyframes animBTN {
+    0%{
+        box-shadow:  0 0 10px 9px rgba(3,169,244,0.3);
+    }
+    33%{
+        box-shadow:  0 0 10px 9px rgba(244,65,165,0.3);
+        
+    }
+    66.9%{
+        box-shadow:  0 0 10px 9px rgba(255,235,59,0.3);
+        
+    }
+    100%{
+        box-shadow:  0 0 10px 9px rgba(3,169,244,0.3);
+    }
+}

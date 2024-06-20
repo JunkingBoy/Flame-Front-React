@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,8 +35,19 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
+
+
 
 body {
-  background-image: linear-gradient(to bottom right, rgb(114, 135, 254), rgb(130, 88, 186));
+  /* background-image: linear-gradient(to bottom right, rgb(114, 135, 254), rgb(130, 88, 186)); 渐变色背景 */
+  margin: 0;
+	padding: 0;
+  min-height:100vh;
+	font-family: sans-serif; /* 设置字体 */
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 移除特定浏览器上的点击效果 */
+}
+
+div {
+  box-sizing: border-box;
 }

@@ -1,7 +1,6 @@
 import { BASE_URL, axiosInstance } from "../config/HeaderInstance";
 import { LoginResponse, RegisterResponse, UserBugInfoResponse, UserCarDataResponse } from "../interface/UserInterface";
 import { ProgramReponse, ProgramBugDetailResponse } from "../interface/ProgramInterface";
-// import { initEncryptionKey, encryptData } from "../utils/Crypt";
 
 async function login(username: string, password: string): Promise<LoginResponse> {
     // // 密钥初始化
@@ -31,9 +30,8 @@ async function login(username: string, password: string): Promise<LoginResponse>
     return response.data;
 }
 
-async function register(email: string, phone: number, password: string, confirmPassword: string): Promise<RegisterResponse> {
+async function register(phone: number, password: string, confirmPassword: string): Promise<RegisterResponse> {
     let response: any = await axiosInstance.put(`${BASE_URL}/user`, {
-        email: email,
         phoneNumber: phone.toString(),
         firstPassword: password,
         confirmPassword: confirmPassword
