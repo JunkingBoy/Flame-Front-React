@@ -96,11 +96,11 @@ const RegisterForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
         let confirmPassword: string = confPasswordInput.value;
 
         if (password === confirmPassword) {
-            // let isValid: boolean = checkInput(username, password);
-            // if (!isValid) {
-            //     setMsg('请输入合法用户名或密码!');
-            //     return;
-            // }
+            let isValid: boolean = checkInput(username, password);
+            if (!isValid) {
+                setMsg('请输入合法用户名或密码!');
+                return;
+            }
 
             let numberUsername: number = parseInt(username, 10);
 

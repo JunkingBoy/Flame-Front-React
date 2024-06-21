@@ -78,11 +78,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
         let username: string = usernameInput.value;
         let password: string = passwordInput.value;
 
-        // let isValid: boolean = checkInput(username, password);
-        // if (!isValid) {
-        //     setMsg('请输入合法用户名或密码!');
-        //     return;
-        // }
+        let isValid: boolean = checkInput(username, password);
+        if (!isValid) {
+            setMsg('请输入合法用户名或密码!');
+            return;
+        }
 
         try {
             let response: LoginResponse = await login(username, password);
