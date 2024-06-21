@@ -32,7 +32,7 @@ async function login(username: string, password: string): Promise<LoginResponse>
 
 async function register(phone: number, password: string, confirmPassword: string): Promise<RegisterResponse> {
     let response: any = await axiosInstance.put(`${BASE_URL}/user`, {
-        phoneNumber: phone.toString(),
+        phoneNumber: phone,
         firstPassword: password,
         confirmPassword: confirmPassword
     });

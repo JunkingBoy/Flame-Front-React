@@ -7,7 +7,7 @@
  */
 import { Children } from "react";
 import { Register } from "../config/Lazy";
-import Login from "../pages/Login";
+import Login from "../pages/LoginRegisterBox";
 import NotFind from "../pages/NotFind";
 import Home from "../pages/Home";
 import Auth from "./RouteAuth";
