@@ -6,6 +6,8 @@ import { register } from '../apis/UserApi';
 
 import { checkInput } from '../utils/Check';
 
+import { AlertTemplate } from '../components/AlertComponent';
+
 import { formInputField, formSubButton } from './FormBox.module';
 
 interface LoginFormProps {
@@ -18,6 +20,8 @@ const RegisterForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
     let [isPwdInputFocused, setIsPwdInputFocused] = useState(false);
     let [isConfPwdInputFocused, setIsConfPwdInputFocused] = useState(false);
     let [msg, setMsg] = useState('');
+    let [resMsg, setResMsg] = useState('');
+    let [showError, setShowError] = useState(false);
 
     const handlePhoneInputFocus = () => {
         setIsPhoneInputFocused(true);
@@ -94,69 +98,87 @@ const RegisterForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
         let username: string = usernameInput.value;
         let password: string = passwordInput.value;
         let confirmPassword: string = confPasswordInput.value;
+        
+        console.log(username);
+        console.log(confirmPassword);
+        console.log(typeof username);
+        console.log(typeof confirmPassword);
 
         if (password === confirmPassword) {
             let isValid: boolean = checkInput(username, password);
             if (!isValid) {
                 setMsg('请输入合法用户名或密码!');
+                setResMsg('密码长度16位以内.以字母、数字、符号组成!');
+                setShowError(true);
                 return;
             }
 
             let numberUsername: number = parseInt(username, 10);
 
             try {
-                console.log(numberUsername, password, confirmPassword);
                 let response: RegisterResponse = await register(numberUsername, password, confirmPassword);
 
-                if (response.status == 200) {
+                if (response.code == 200) {
                     setMsg('注册成功!');
+                    setShowError(false);
                 } else {
-                    setMsg('注册失败!' + response.status);
+                    setMsg('注册失败!' + response.code);
+                    setResMsg(response.msg);
+                    setShowError(true);
                 }
             } catch (error) {
                 setMsg('网络请求失败!');
+                setShowError(true);
+            } finally {
+                usernameInput.value = '';
+                passwordInput.value = '';
+                confPasswordInput.value = '';
             }
         } else {
             setMsg('两次输入密码不相同,请重新输入!');
+            setShowError(true);
         }
     }
 
     return (
-        <form id='register' onSubmit={registerSub} style={formInputGroupStyle}>
-            <input
-                type="text"
-                style={phoneInputStyle(isPhoneInputFocused)}
-                placeholder='phone | 手机号'
-                onFocus={handlePhoneInputFocus}
-                onBlur={handlePhoneInputBlur}
-                required
-            />
-            <input
-                id='pwd'
-                type='Password'
-                style={pwdInputStyle(isPwdInputFocused)}
-                placeholder='password | 密码'
-                onFocus={handlePwdInputFocus}
-                onBlur={handlePwdInputBlur}
-                required
-            />
-            <input
-                id='confpwd'
-                type='Password'
-                style={confPwdInputStyle(isConfPwdInputFocused)}
-                placeholder='confirmPassword | 确认密码'
-                onFocus={handleConfPwdInputFocus}
-                onBlur={handleConfPwdInputBlur}
-                required
-            />
-            <input
-                type="submit"
-                style={buttonStyle}
-                value={'注册'}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-            />
-        </form>
+        <>
+            <form id='register' onSubmit={registerSub} style={formInputGroupStyle}>
+                <input
+                    type="text"
+                    style={phoneInputStyle(isPhoneInputFocused)}
+                    placeholder='phone | 手机号'
+                    onFocus={handlePhoneInputFocus}
+                    onBlur={handlePhoneInputBlur}
+                    required
+                />
+                <input
+                    id='pwd'
+                    type='Password'
+                    style={pwdInputStyle(isPwdInputFocused)}
+                    placeholder='password | 密码'
+                    onFocus={handlePwdInputFocus}
+                    onBlur={handlePwdInputBlur}
+                    required
+                />
+                <input
+                    id='confpwd'
+                    type='Password'
+                    style={confPwdInputStyle(isConfPwdInputFocused)}
+                    placeholder='confirmPassword | 确认密码'
+                    onFocus={handleConfPwdInputFocus}
+                    onBlur={handleConfPwdInputBlur}
+                    required
+                />
+                <input
+                    type="submit"
+                    style={buttonStyle}
+                    value={'注册'}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                />
+            </form>
+            {showError && <AlertTemplate message={msg} description={resMsg} />}
+        </>
     );
 }
 

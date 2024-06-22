@@ -1,10 +1,11 @@
 interface LoginData {
-    message: string;
+    token?: string;
+    token_type?: string;
+    error?: string;
 }
 
 interface RegisterData {
-    username: string;
-    message: string;
+    error?: string;
 }
 
 interface UserProBugData {
@@ -21,15 +22,15 @@ interface UserCareerData {
 }
 
 interface LoginResponse {
-    id: number,
-    token: string;
-    status: number;
-    data: LoginData[];
+    code: number;
+    data: LoginData;
+    msg: string;
 }
 
 interface RegisterResponse {
-    status: number;
+    code: number;
     data: RegisterData[];
+    msg: string;
 }
 
 interface UserBugInfoResponse {

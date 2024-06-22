@@ -87,10 +87,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
         try {
             let response: LoginResponse = await login(username, password);
 
-            if (response.status == 200) {
+            if (response.code == 200) {
                 setMsg('登录成功!');
             } else {
-                setMsg('登录失败!' + response.status);
+                setMsg('登录失败!' + response.code);
             }
         } catch (error) {
             setMsg('网络请求失败!');

@@ -21,9 +21,9 @@ async function login(username: string, password: string): Promise<LoginResponse>
     //         .join('')
     // );
 
-    let response: any = await axiosInstance.post(`${BASE_URL}/user`, {
-        username: username,
-        encryptedPassword: password,
+    let response: any = await axiosInstance.post(`${BASE_URL}/user/login`, {
+        phone: username,
+        password: password,
         // iv: ivBase64,
     });
     
@@ -31,10 +31,18 @@ async function login(username: string, password: string): Promise<LoginResponse>
 }
 
 async function register(phone: number, password: string, confirmPassword: string): Promise<RegisterResponse> {
-    let response: any = await axiosInstance.put(`${BASE_URL}/user`, {
-        phoneNumber: phone,
-        firstPassword: password,
-        confirmPassword: confirmPassword
+    console.log(password);
+    console.log(confirmPassword);
+    // let utf8password: string = new TextEncoder().encode(password).toString();
+    // let utf8ConfPassword: string = new TextEncoder().encode(confirmPassword).toString();
+
+    // console.log(utf8password);
+    // console.log(utf8ConfPassword);
+
+    let response: any = await axiosInstance.post(`${BASE_URL}/user/register`, {
+        phone: phone,
+        password: password,
+        password_confirm: confirmPassword
     });
 
     return response.data;
