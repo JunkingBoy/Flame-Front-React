@@ -1,5 +1,3 @@
-import { stringify } from "querystring";
-
 export class DataContainer<T> {
     code?: number;
     msg?: string;
