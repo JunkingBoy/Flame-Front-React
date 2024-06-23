@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { formInputField, formSubButton } from './FormBox.module';
 
@@ -16,6 +17,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
     let [isLogInputFocused, setIsLogInputFocused] = useState(false);
     let [isPwdInputFocused, setIsPwdInputFocused] = useState(false);
     let [msg, setMsg] = useState('');
+
+    const nav: any = useNavigate();
 
     const handleLogInputFocus = () => {
         setIsLogInputFocused(true);
@@ -88,7 +91,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
             let response: LoginResponse = await login(username, password);
 
             if (response.code == 200) {
+                let token: string | undefined = response.data.token;
+
+                localStorage.setItem('token', token || '');
                 setMsg('登录成功!');
+                nav('/home');
             } else {
                 setMsg('登录失败!' + response.code);
             }

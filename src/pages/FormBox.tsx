@@ -26,7 +26,7 @@ const FormBox: React.FC = () => {
         <div style={loginFormContainer}>
             <div style={formBoxStyle} onClick={() => handlePositionChange('0', '50%')}></div>
             <LoginRegisterChange onPositionChange={handlePositionChange} onChangeForm={changeForm} />
-            {isLogin === 'log' ? <LoginForm formInputGroupStyle={logFormStyle} /> : <RegisterForm formInputGroupStyle={regFormStyle} />}
+            {isLogin === 'log' ? <LoginForm formInputGroupStyle={logFormStyle} /> : <RegisterForm formInputGroupStyle={regFormStyle} onChangeForm={changeForm} />}
         </div>
     );
 }

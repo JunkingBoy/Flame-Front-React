@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 import { RegisterResponse } from '../interface/UserInterface';
 
@@ -12,9 +13,10 @@ import { formInputField, formSubButton } from './FormBox.module';
 
 interface LoginFormProps {
     formInputGroupStyle?: React.CSSProperties;
+    onChangeForm: (formType: string) => void;
 }
 
-const RegisterForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
+const RegisterForm: React.FC<LoginFormProps> = ({ formInputGroupStyle, onChangeForm }) => {
     let [isBtnFocused, setIsBtnFocused] = useState(false);
     let [isPhoneInputFocused, setIsPhoneInputFocused] = useState(false);
     let [isPwdInputFocused, setIsPwdInputFocused] = useState(false);
@@ -22,6 +24,8 @@ const RegisterForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
     let [msg, setMsg] = useState('');
     let [resMsg, setResMsg] = useState('');
     let [showError, setShowError] = useState(false);
+
+    let nav: any = useNavigate();
 
     const handlePhoneInputFocus = () => {
         setIsPhoneInputFocused(true);
@@ -121,6 +125,7 @@ const RegisterForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
                 if (response.code == 200) {
                     setMsg('注册成功!');
                     setShowError(false);
+                    onChangeForm('log');
                 } else {
                     setMsg('注册失败!' + response.code);
                     setResMsg(response.msg);
