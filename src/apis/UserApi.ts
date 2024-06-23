@@ -1,24 +1,29 @@
 import { BASE_URL, axiosInstance } from "../config/HeaderInstance";
-import { LoginResponse, RegisterResponse, UserBugInfoResponse, UserCarDataResponse } from "../interface/UserInterface";
+import { LoginData, RegisterData, UserBugInfoResponse, UserCarDataResponse } from "../interface/UserInterface";
 import { ProgramReponse, ProgramBugDetailResponse } from "../interface/ProgramInterface";
+import { DataContainer } from "../utils/InterfaceClass";
 
-async function login(username: string, password: string): Promise<LoginResponse> {
+async function login(username: string, password: string): Promise<DataContainer<LoginData>> {
     let response: any = await axiosInstance.post(`${BASE_URL}/user/login`, {
         phone: username,
         password: password,
     });
+
+    let retData: DataContainer<LoginData> = new DataContainer(response.data.code, response.data.msg, response.data.data);
     
-    return response.data;
+    return retData;
 }
 
-async function register(phone: number, password: string, confirmPassword: string): Promise<RegisterResponse> {
+async function register(phone: number, password: string, confirmPassword: string): Promise<DataContainer<RegisterData>> {
     let response: any = await axiosInstance.put(`${BASE_URL}/user/register`, {
         phone: phone,
         password: password,
         password_confirm: confirmPassword
     });
 
-    return response.data;
+    let retData: DataContainer<RegisterData> = new DataContainer(response.data.code, response.data.msg, response.data.data);
+
+    return retData;
 }
 
 async function getUserBugInfo(userId: number): Promise<UserBugInfoResponse> {

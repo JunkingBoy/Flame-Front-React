@@ -19,4 +19,20 @@ axiosInstance.interceptors.request.use(config => {
   return config;
 }, error => Promise.reject(error));
 
-export {BASE_URL, axiosInstance};
+const axiosUpData: AxiosInstance = axios.create({
+    baseURL: `${BASE_URL}`,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+});
+
+axiosUpData.interceptors.request.use(config => {
+  const token = localStorage.getItem('token');
+
+  if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, error => Promise.reject(error))
+
+export {BASE_URL, axiosInstance, axiosUpData};

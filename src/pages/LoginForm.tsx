@@ -6,7 +6,8 @@ import { formInputField, formSubButton } from './FormBox.module';
 import { login } from '../apis/UserApi';
 
 import { checkInput } from '../utils/Check';
-import { LoginResponse } from '../interface/UserInterface';
+import { LoginData } from '../interface/UserInterface';
+import { DataContainer } from '../utils/InterfaceClass';
 
 interface LoginFormProps {
     formInputGroupStyle?: React.CSSProperties;
@@ -88,10 +89,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
         }
 
         try {
-            let response: LoginResponse = await login(username, password);
+            let response: DataContainer<LoginData> = await login(username, password);
 
             if (response.code == 200) {
-                let token: string | undefined = response.data.token;
+                let token: any = response.getValue('token');
 
                 localStorage.setItem('token', token || '');
                 setMsg('登录成功!');
