@@ -11,7 +11,7 @@ async function getTemplate(type: string) {
 
 async function pushFile(file: File): Promise<DataContainer<any>> {
     let formData = new FormData();
-    formData.append('excelFile', file);
+    formData.append('file', file);
 
     let response: any = await axiosUpData.post(`${BASE_URL}/uploadcase_excel`, formData);
 

@@ -15,7 +15,7 @@ async function login(username: string, password: string): Promise<DataContainer<
 }
 
 async function register(phone: number, password: string, confirmPassword: string): Promise<DataContainer<RegisterData>> {
-    let response: any = await axiosInstance.put(`${BASE_URL}/user/register`, {
+    let response: any = await axiosInstance.post(`${BASE_URL}/user/register`, {
         phone: phone,
         password: password,
         password_confirm: confirmPassword
