@@ -1,6 +1,6 @@
 import { BASE_URL, axiosInstance } from "../config/HeaderInstance";
-import { LoginData, RegisterData, UserBugInfoResponse, UserCarDataResponse } from "../interface/UserInterface";
-import { ProgramReponse, ProgramBugDetailResponse } from "../interface/ProgramInterface";
+import { LoginData, RegisterData, UserProBugData, UserCarDataResponse } from "../interface/UserInterface";
+import { ProgramBugDetailResponse, ProgramInfo } from "../interface/ProgramInterface";
 import { DataContainer } from "../utils/InterfaceClass";
 
 async function login(username: string, password: string): Promise<DataContainer<LoginData>> {
@@ -26,7 +26,7 @@ async function register(phone: number, password: string, confirmPassword: string
     return retData;
 }
 
-async function getUserBugInfo(userId: number): Promise<UserBugInfoResponse> {
+async function getUserBugInfo(userId: number): Promise<DataContainer<UserProBugData>> {
     let response: any = await axiosInstance.get(`${BASE_URL}/user`, {
         params: {
             userId: userId
@@ -36,7 +36,7 @@ async function getUserBugInfo(userId: number): Promise<UserBugInfoResponse> {
     return response.data;
 }
 
-async function getUserProBugInfo(userId: number, programName?: string): Promise<ProgramReponse> {
+async function getUserProBugInfo(userId: number, programName?: string): Promise<DataContainer<ProgramInfo>> {
     let params: any = {
         userId: userId,
         status: 1

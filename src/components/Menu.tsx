@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu } from 'antd';
 import type { MenuProps } from 'antd';
@@ -45,7 +45,7 @@ const SiderMenu: React.FC = () => {
     const items: MenuItem[] = [
         getItems('个人数据', '/home', <FundFilled className='work-output' />),
         getItems('开始测试', 'sub1', <ScheduleFilled className='start-work' />, [
-            getItems('新建项目', '/home/testproject', <FileAddFilled />),
+            getItems('新建项目', '/home/project', <FileAddFilled />),
             getItems('测试计划', '/home/testplan', <EditFilled />),
             getItems('执行用例', '/home/testcase', <ToolFilled />, [
                 getItems('功能用例', '/home/testcase/func', <CodeFilled />),
