@@ -20,7 +20,8 @@ const routes = [
         // [
         //     { path: "main", element: <Main /> }
         // ]
-        path: "/home", element: <Auth><Home /></Auth>
+        // path: "/home", element: <Auth><Home /></Auth>
+        path: "/home", element: <Home />
     },
     { path: "/*", element: <NotFind /> }
 ]

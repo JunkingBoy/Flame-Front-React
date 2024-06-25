@@ -14,7 +14,9 @@ import {
     SignalFilled,
     DollarOutlined,
     ContainerFilled,
-    FileAddFilled
+    FileAddFilled,
+    ApiFilled,
+    ToolFilled
   } from '@ant-design/icons';
 
 import { HeaderSiderProps } from '../interface/MenuInterface';
@@ -45,7 +47,10 @@ const SiderMenu: React.FC = () => {
         getItems('开始测试', 'sub1', <ScheduleFilled className='start-work' />, [
             getItems('新建项目', '/home/testproject', <FileAddFilled />),
             getItems('测试计划', '/home/testplan', <EditFilled />),
-            getItems('执行用例', '/home/testcase', <CodeFilled />),
+            getItems('执行用例', '/home/testcase', <ToolFilled />, [
+                getItems('功能用例', '/home/testcase/func', <CodeFilled />),
+                getItems('接口用例', '/home/testcase/api', <ApiFilled />)
+            ]),
             getItems('测试结果', '/home/testresult', <CheckSquareFilled />),
             getItems('测试报告', '/home/testreport', <PieChartFilled />),
         ]),
