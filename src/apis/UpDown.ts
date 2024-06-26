@@ -1,12 +1,40 @@
 import { BASE_URL, axiosInstance, axiosUpData } from "../config/HeaderInstance";
 import { DataContainer } from "../utils/InterfaceClass";
 
-async function getTemplate(type: string) {
-    return await axiosInstance.get(`${BASE_URL}/downloadcase_template`, {
-        params: {
-            type: type
+interface CaseResponseType {
+    code: number;
+    message: string;
+    data?: any;
+}
+
+async function getTemplate(type: string): Promise<void> {
+    try {
+        let response = await axiosInstance.get(`${BASE_URL}/case/download/case_template`, {
+            responseType: 'blob', // 直接在config中明确指定responseType
+            params: {
+                type: type,
+            }
+        });
+
+        if (response.status === 200) {
+            // 获取到Blob对象后直接使用，不额外包装在数组中
+            let url = window.URL.createObjectURL(response.data);
+            let link = document.createElement('a');
+            link.href = url;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        } else {
+            console.error(`Download failed with status: ${response.status}`);
         }
-    });
+    } catch (error) {
+        console.error('Error during file download:', error);
+        if ((error as any).response && (error as any).response.data) {
+            const errorData = (error as any).response.data as CaseResponseType;
+            console.error('Server responded with:', errorData.message);
+        }
+    }
 }
 
 async function pushFile(file: File): Promise<DataContainer<any>> {
