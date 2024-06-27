@@ -9,6 +9,7 @@ import {
 } from './Project.module';
 
 import ClickForm from './ClickForm';
+import CardBox from './CardBox';
 
 import SearchSelf from './Search';
 
@@ -88,7 +89,7 @@ const Project: React.FC = () => {
                                     <ClickForm />
                                 </div>
                             </div>
-                            <div>2</div>
+                            <CardBox />
                             <div>3</div>
                         </div>
                     </div>
