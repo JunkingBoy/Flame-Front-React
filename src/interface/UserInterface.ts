@@ -21,12 +21,6 @@ interface UserCareerData {
     fullMark: number;
 }
 
-interface LoginResponse {
-    code: number;
-    data: LoginData;
-    msg: string;
-}
-
 interface RegisterResponse {
     code: number;
     data: RegisterData[];
@@ -47,4 +41,12 @@ interface UserCarDataResponse {
     data: UserCareerData[]
 }
 
-export type { LoginResponse, RegisterResponse, UserProBugData, UserBugInfoResponse, UserCarDataResponse, UserCareerData }
+export type {
+    RegisterResponse,
+    UserProBugData,
+    UserBugInfoResponse,
+    UserCarDataResponse,
+    UserCareerData,
+    LoginData,
+    RegisterData
+}

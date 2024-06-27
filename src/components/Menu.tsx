@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu } from 'antd';
 import type { MenuProps } from 'antd';
 import {
     ScheduleFilled,
-    FileWordFilled,
-    FileFilled,
-    PieChartOutlined,
+    ProjectFilled,
+    EditFilled,
+    CodeFilled,
+    CheckSquareFilled,
+    PieChartFilled,
     FundFilled,
-    BugFilled,
+    DatabaseFilled,
     SignalFilled,
-    DollarOutlined
+    DollarOutlined,
+    ContainerFilled,
+    FileAddFilled,
+    ApiFilled,
+    ToolFilled
   } from '@ant-design/icons';
 
 import { HeaderSiderProps } from '../interface/MenuInterface';
@@ -39,12 +45,19 @@ const SiderMenu: React.FC = () => {
     const items: MenuItem[] = [
         getItems('个人数据', '/home', <FundFilled className='work-output' />),
         getItems('开始测试', 'sub1', <ScheduleFilled className='start-work' />, [
-            getItems('测试计划', '/home/testplan', <FileWordFilled />),
-            getItems('测试用例', '/home/testcase', <FileFilled />),
-            getItems('测试报告', '/home/testreport', <PieChartOutlined />),
+            getItems('新建项目', '/home/project', <FileAddFilled />),
+            getItems('测试计划', '/home/testplan', <EditFilled />),
+            getItems('执行用例', '/home/testcase', <ToolFilled />, [
+                getItems('功能用例', '/home/testcase/func', <CodeFilled />),
+                getItems('接口用例', '/home/testcase/api', <ApiFilled />)
+            ]),
+            getItems('测试结果', '/home/testresult', <CheckSquareFilled />),
+            getItems('测试报告', '/home/testreport', <PieChartFilled />),
         ]),
-        getItems('Bug管理', 'bug1', <BugFilled className='bug-manage' />, [
-            getItems('Bug统计', '/home/bug/count', <SignalFilled />)
+        getItems('导出', 'bug1', <DatabaseFilled />, [
+            getItems('个人数据', '/home/bug/count', <SignalFilled />),
+            getItems('项目数据', '/home/bug/count', <ProjectFilled />),
+            getItems('测试用例', '/home/bug/count', <ContainerFilled />)
         ])
     ];
 

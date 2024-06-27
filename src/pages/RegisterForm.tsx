@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
-import { RegisterResponse } from '../interface/UserInterface';
+import { RegisterData } from '../interface/UserInterface';
 
 import { register } from '../apis/UserApi';
 
@@ -9,18 +10,20 @@ import { checkInput } from '../utils/Check';
 import { AlertTemplate } from '../components/AlertComponent';
 
 import { formInputField, formSubButton } from './FormBox.module';
+import { DataContainer } from '../utils/InterfaceClass';
 
 interface LoginFormProps {
     formInputGroupStyle?: React.CSSProperties;
+    onChangeForm: (formType: string) => void;
 }
 
-const RegisterForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
+const RegisterForm: React.FC<LoginFormProps> = ({ formInputGroupStyle, onChangeForm }) => {
     let [isBtnFocused, setIsBtnFocused] = useState(false);
     let [isPhoneInputFocused, setIsPhoneInputFocused] = useState(false);
     let [isPwdInputFocused, setIsPwdInputFocused] = useState(false);
     let [isConfPwdInputFocused, setIsConfPwdInputFocused] = useState(false);
     let [msg, setMsg] = useState('');
-    let [resMsg, setResMsg] = useState('');
+    let [resMsg, setResMsg] = useState<string>('');
     let [showError, setShowError] = useState(false);
 
     const handlePhoneInputFocus = () => {
@@ -98,11 +101,6 @@ const RegisterForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
         let username: string = usernameInput.value;
         let password: string = passwordInput.value;
         let confirmPassword: string = confPasswordInput.value;
-        
-        console.log(username);
-        console.log(confirmPassword);
-        console.log(typeof username);
-        console.log(typeof confirmPassword);
 
         if (password === confirmPassword) {
             let isValid: boolean = checkInput(username, password);
@@ -116,14 +114,16 @@ const RegisterForm: React.FC<LoginFormProps> = ({ formInputGroupStyle }) => {
             let numberUsername: number = parseInt(username, 10);
 
             try {
-                let response: RegisterResponse = await register(numberUsername, password, confirmPassword);
+                let response: DataContainer<RegisterData> = await register(numberUsername, password, confirmPassword);
 
                 if (response.code == 200) {
                     setMsg('注册成功!');
                     setShowError(false);
+                    onChangeForm('log');
                 } else {
+                    let mesg: any = response.msg;
                     setMsg('注册失败!' + response.code);
-                    setResMsg(response.msg);
+                    setResMsg(mesg);
                     setShowError(true);
                 }
             } catch (error) {
