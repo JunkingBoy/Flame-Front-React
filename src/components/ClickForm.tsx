@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Modal } from 'antd';
 
+import { createPro } from '../apis/Project';
+
 import GetTemplate from './GetTemplate';
 
 interface Values {
@@ -21,10 +23,17 @@ const ClickForm: React.FC = () => {
     let [formValues, setFormValues] = useState<Values>();
     let [open, setOpen] = useState(false);
 
-    const onCreate = (values: Values) => {
-        setFormValues(values);
-        setOpen(false);
-        form.resetFields();
+    const onCreatePro = async (values: Values) => {
+        try {
+            let response: any = await createPro(values.title!, values.description!);
+            if (response.code === 200) {
+                setFormValues(values);
+                setOpen(false);
+                form.resetFields();
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -33,7 +42,6 @@ const ClickForm: React.FC = () => {
                 <Button type="primary" onClick={() => setOpen(true)}>
                     添加项目
                 </Button>
-                {/* <pre>{JSON.stringify(formValues, null, 2)}</pre> */}
                 <Modal
                     open={open}
                     title="新建项目"
@@ -47,7 +55,7 @@ const ClickForm: React.FC = () => {
                             layout="vertical"
                             form={form}
                             name="form_in_modal"
-                            onFinish={(values) => onCreate(values)}
+                            onFinish={(values) => onCreatePro(values)}
                         >
                             {dom}
                         </Form>
