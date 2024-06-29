@@ -3,7 +3,6 @@ import { Flex, Progress, Tooltip, Card } from 'antd';
 import type { ProgressProps } from 'antd';
 import {
     EllipsisOutlined,
-    SettingOutlined,
     EditOutlined,
     DiffFilled
  } from '@ant-design/icons';
@@ -28,7 +27,7 @@ const headerBox: React.CSSProperties = {
 const twoColors: ProgressProps['strokeColor'] = {
     '0%': '#108ee9',
     '100%': '#87d068',
-  };
+};
 
 /**
  * 卡片布局
