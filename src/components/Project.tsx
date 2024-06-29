@@ -89,7 +89,13 @@ const Project: React.FC = () => {
                                     <ClickForm />
                                 </div>
                             </div>
-                            <CardBox />
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                                <CardBox />
+                                <CardBox />
+                                <CardBox />
+                                <CardBox />
+                                <CardBox />
+                            </div>
                             <div>3</div>
                         </div>
                     </div>
