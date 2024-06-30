@@ -1,12 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
-
-import { getUserBugInfo, getUserProBugInfo, getUserCareerInfo, getUserProBugDetail } from '../apis/UserApi';
-import { UserProBugData, UserBugInfoResponse, UserCareerData, UserCarDataResponse } from '../interface/UserInterface';
-import { ProgramReponse, ProgramBugDetail, ProgramBugDetailResponse } from '../interface/ProgramInterface';
-import { ExtractProToPieData } from '../interface/ExtractInterface';
-import { extractProNames, extractProToPie, extractAllProName } from '../utils/Extract';
 import hotflame from '../images/hotflame.png';
 
 import { SiderMenu } from '../components/Menu';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography } from 'antd';
 
 import {
@@ -8,10 +8,14 @@ import {
     inlineContentInlineDiv
 } from './Project.module';
 
+import { ProjectInfo } from '../interface/ProjectInterface';
+
 import ClickForm from './ClickForm';
 import CardBox from './CardBox';
 
 import SearchSelf from './Search';
+import { DataContainer } from '../utils/InterfaceClass';
+import { getProjectInfo } from '../apis/Project';
 
 const { Title } = Typography;
 
@@ -65,7 +69,34 @@ const inlineContentInlineLeft: React.CSSProperties = {
     height: '100%',
 }
 
+/**
+ * 初次进入该组件的时候应该去请求一遍card相关api.获取到card信息设置到Card对应的属性当中
+ * 当新建项目的时候应该再次请求card信息api
+ */
 const Project: React.FC = () => {
+    let [cardNum, setCardNum] = useState<number>();
+    let [cardInfo, setCardInfo] = useState<ProjectInfo[]>([]);
+
+    const fetchCardInfo = async () => {
+        try {
+            let response: DataContainer<ProjectInfo> = await getProjectInfo();
+
+            if (response.code === 200) {
+                let data: ProjectInfo[] = response.getSerializedData() as ProjectInfo[];
+                setCardNum(data.length);
+                setCardInfo(response.getSerializedData() as ProjectInfo[]);
+            } else {
+                console.log('fecth card info fail');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() =>  {
+        fetchCardInfo();
+    }, []);
+
     return (
         <div style={mainDiv}>
             <div style={inlineHeaderDiv}>
@@ -84,17 +115,12 @@ const Project: React.FC = () => {
                                 <div style={{ width: '85%', height: '100%' }}>
                                     <Title level={5} style={{ margin: '25px 0 12px 20px', color: 'black'}}>我的项目</Title>
                                 </div>
-                                {/* 开发上传组件 */}
                                 <div style={{ width: '15%', height: '100%' }}>
                                     <ClickForm />
                                 </div>
                             </div>
                             <div style={{display: 'flex', flexDirection: 'row'}}>
-                                <CardBox />
-                                <CardBox />
-                                <CardBox />
-                                <CardBox />
-                                <CardBox />
+                                {/* <CardBox /> */}
                             </div>
                             <div>3</div>
                         </div>
