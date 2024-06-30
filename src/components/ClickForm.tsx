@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Modal } from 'antd';
 
-import { createPro } from '../apis/Project';
+import { createPro, getProjectInfo } from '../apis/Project';
 
 import GetTemplate from './GetTemplate';
 
 interface Values {
     title?: string;
     description?: string;
+}
+
+interface ProPromise {
+    onProAdd: () => Promise<void>;
 }
 
 const clickFormCss: React.CSSProperties = {
@@ -18,7 +22,7 @@ const clickFormCss: React.CSSProperties = {
     height: '100%'
 }
 
-const ClickForm: React.FC = () => {
+const ClickForm: React.FC<ProPromise> = ({ onProAdd }) => {
     let [form] = Form.useForm();
     let [formValues, setFormValues] = useState<Values>();
     let [open, setOpen] = useState(false);
@@ -30,6 +34,7 @@ const ClickForm: React.FC = () => {
                 setFormValues(values);
                 setOpen(false);
                 form.resetFields();
+                await onProAdd();
             }
         } catch (error) {
             console.log(error);
@@ -50,6 +55,7 @@ const ClickForm: React.FC = () => {
                     okButtonProps={{ autoFocus: true, htmlType: 'submit' }}
                     onCancel={() => setOpen(false)}
                     destroyOnClose
+                    maskClosable
                     modalRender={(dom) => (
                         <Form
                             layout="vertical"
