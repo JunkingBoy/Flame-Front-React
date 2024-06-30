@@ -74,8 +74,14 @@ const inlineContentInlineLeft: React.CSSProperties = {
  * 当新建项目的时候应该再次请求card信息api
  */
 const Project: React.FC = () => {
-    let [cardNum, setCardNum] = useState<number>();
+    let [cardNum, setCardNum] = useState<number>(0);
     let [cardInfo, setCardInfo] = useState<ProjectInfo[]>([]);
+
+    const handleSetProCount = async () => {
+        let currentCount: number = cardNum;
+        currentCount++;
+        setCardNum(currentCount);
+    }
 
     const fetchCardInfo = async () => {
         try {
@@ -95,7 +101,7 @@ const Project: React.FC = () => {
 
     useEffect(() =>  {
         fetchCardInfo();
-    }, []);
+    }, [cardNum]);
 
     return (
         <div style={mainDiv}>
@@ -116,11 +122,13 @@ const Project: React.FC = () => {
                                     <Title level={5} style={{ margin: '25px 0 12px 20px', color: 'black'}}>我的项目</Title>
                                 </div>
                                 <div style={{ width: '15%', height: '100%' }}>
-                                    <ClickForm />
+                                    <ClickForm onProAdd={handleSetProCount} />
                                 </div>
                             </div>
                             <div style={{display: 'flex', flexDirection: 'row'}}>
-                                {/* <CardBox /> */}
+                            {cardNum !== 0 && cardInfo.slice(0, 5).map((info, index) => (
+                                <CardBox info={info} key={index} />
+                            ))}
                             </div>
                             <div>3</div>
                         </div>

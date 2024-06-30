@@ -1,3 +1,10 @@
+/*
+ * @Author: Lucifer
+ * @Data: Do not edit
+ * @LastEditors: Lucifer
+ * @LastEditTime: 2024-06-30 23:43:04
+ * @Description: 
+ */
 import React, { useState } from 'react';
 import { Flex, Progress, Tooltip, Card } from 'antd';
 import type { ProgressProps } from 'antd';
@@ -55,7 +62,7 @@ const CardBox: React.FC<{ info: ProjectInfo }> = ({ info }) => {
                 <EllipsisOutlined key='ellipsis' />
             ]}
             hoverable={true}
-            loading={true}
+            // loading={true}
         >
             <Meta
                 title={info.project_name}
