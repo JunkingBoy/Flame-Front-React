@@ -1,4 +1,5 @@
-interface ProjectInfo { 
+interface ProjectInfo {
+    project_id: number;
     project_name: string;
     project_desc: string;
     case: ProjectCaseData;
