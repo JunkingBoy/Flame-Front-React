@@ -10,5 +10,6 @@ interface ProjectCaseData {
 }
 
 export type {
-    ProjectInfo
+    ProjectInfo,
+    ProjectCaseData
 }
