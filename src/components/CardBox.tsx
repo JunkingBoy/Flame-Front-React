@@ -15,8 +15,7 @@ import {
  } from '@ant-design/icons';
 
 import { ProjectInfo } from '../interface/ProjectInterface';
-import { DataContainer } from '../utils/InterfaceClass';
-import { ProCalContainer } from '../utils/InterfaceClass';
+import { calCompletionRate } from '../utils/Calculate';
 
 const { Meta } = Card;
 
@@ -46,12 +45,7 @@ const twoColors: ProgressProps['strokeColor'] = {
  * @returns 返回页面盒子组件
  */
 const CardBox: React.FC<{ info: ProjectInfo }> = ({ info }) => {
-    /**
-     * 处理传入的info对象
-     */
-    // let [calInfo, setCalInfo] = useState<DataContainer<ProjectInfo>>();
-
-    // const cal: number = new ProCalContainer<ProjectInfo>(info).getCompletenes(info.case.pass_case, info.case.all_case);
+    let [percent, setPercent] = useState<number>(calCompletionRate(info.case));
 
     return (
         <Card
@@ -69,8 +63,7 @@ const CardBox: React.FC<{ info: ProjectInfo }> = ({ info }) => {
                 description={info.project_desc}
             />
             <Flex vertical  gap="middle">
-                {/* 75修改为接收的值 */}
-                <Progress percent={75} strokeColor={twoColors} />
+                <Progress percent={percent} strokeColor={twoColors} />
             </Flex>
             <Tooltip title="用例数量">
                 <span>用例数量: {info.case.all_case}</span>
