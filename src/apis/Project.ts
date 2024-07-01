@@ -18,7 +18,14 @@ async function getProjectInfo(): Promise<DataContainer<ProjectInfo>> {
     return new DataContainer(response.data.code, response.data.msg, response.data.data);
 }
 
+async function delPro(projectId: number): Promise<DataContainer<any>> {
+    let response: any = await axiosInstance.delete(`${BASE_URL}/project/delete/${projectId}`);
+
+    return new DataContainer(response.data.code, response.data.msg, response.data.data);
+}
+
 export {
     createPro,
+    delPro,
     getProjectInfo
 }
