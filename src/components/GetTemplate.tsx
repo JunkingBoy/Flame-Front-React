@@ -44,7 +44,7 @@ const GetTemplate: React.FC = () => {
             >
             <a onClick={(e) => e.preventDefault()}>
                 <Space>
-                获取用例模板
+                用例模板
                 <DownOutlined />
                 </Space>
             </a>

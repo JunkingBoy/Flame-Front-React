@@ -116,4 +116,7 @@ const HeaderSider: React.FC<HeaderSiderProps> = ({ programNameList, onProClick }
     );
 }
 
-export {SiderMenu, HeaderSider};
+export {
+    SiderMenu,
+    HeaderSider
+};
