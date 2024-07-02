@@ -37,11 +37,18 @@ async function getTemplate(type: string): Promise<void> {
     }
 }
 
-async function pushFile(file: File): Promise<DataContainer<any>> {
+async function pushFile(file: File, type: string, projectId: string, errOrAll?: string): Promise<DataContainer<any>> {
     let formData = new FormData();
     formData.append('file', file);
 
-    let response: any = await axiosUpData.post(`${BASE_URL}/uploadcase_excel`, formData);
+    let headers = {
+        'Content-Type': 'multipart/form-data',
+        'type': type,
+        'projectId': projectId,
+        'errOrAll': '0'
+    }
+
+    let response: any = await axiosUpData.post(`${BASE_URL}/case/parse/upload`, formData, {headers});
 
     let retData: DataContainer<any> = new DataContainer(response.data.code, response.data.msg, response.data.data);
 

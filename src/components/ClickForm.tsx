@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Modal } from 'antd';
 
-import { createPro, getProjectInfo } from '../apis/Project';
+import { createPro } from '../apis/Project';
 
 import GetTemplate from './GetTemplate';
 
@@ -79,7 +79,7 @@ const ClickForm: React.FC<ProPromise> = ({ onProAdd }) => {
                     </Form.Item>
                 </Modal>
             </div>
-            <div style={{ width: '80%', height: '100%', margin: '20px 0 12px 20px' }}>
+            <div style={{ width: '80%', height: '100%', margin: '20px 0 12px 35px' }}>
                 <GetTemplate />
             </div>
         </div>

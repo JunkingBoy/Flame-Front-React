@@ -1,7 +1,7 @@
 const headerSiderDiv: React.CSSProperties = {
-    height: '178px',
+    height: '100%',
     overflow: 'auto',
-    width: '156px',
+    width: '100%',
     borderRadius: 8,
     backgroundColor: 'white'
 }
