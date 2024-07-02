@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Typography } from 'antd';
+import { 
+    Typography,
+    message,
+    Modal
+ } from 'antd';
 
 import {
     mainDiv,
@@ -9,13 +13,15 @@ import {
 } from './Project.module';
 
 import { ProjectInfo } from '../interface/ProjectInterface';
+import { DataContainer } from '../utils/InterfaceClass';
+import { getProjectInfo, delPro } from '../apis/Project';
 
 import ClickForm from './ClickForm';
 import CardBox from './CardBox';
 
+import { DateSelect, SelectButton } from './DateSelect';
+import { HeaderSider } from './Menu';
 import SearchSelf from './Search';
-import { DataContainer } from '../utils/InterfaceClass';
-import { getProjectInfo } from '../apis/Project';
 
 const { Title } = Typography;
 
@@ -69,9 +75,17 @@ const inlineContentInlineLeft: React.CSSProperties = {
     height: '100%',
 }
 
+const inilneContentDivThree: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    height: '100%'
+}
+
 /**
  * 初次进入该组件的时候应该去请求一遍card相关api.获取到card信息设置到Card对应的属性当中
  * 当新建项目的时候应该再次请求card信息api
+ * 删除项目时cardNum也会被改变
  */
 const Project: React.FC = () => {
     let [cardNum, setCardNum] = useState<number>(0);
@@ -81,7 +95,39 @@ const Project: React.FC = () => {
         let currentCount: number = cardNum;
         currentCount++;
         setCardNum(currentCount);
-    }
+    };
+
+    const handleDelete = (name: string, id: number) => {
+        Modal.confirm({
+            title: '确认删除?',
+            content: `确定要删除项目"${name}"吗？`,
+            okText: '确认',
+            cancelText: '取消',
+            onOk: async () => {
+                console.log(22222);
+                try {
+                    let delRes: DataContainer<any> = await delPro(id);
+    
+                    if (delRes.code === 200) {
+                        message.success(`删除成功!`);
+                        let cal: number = cardNum - 1;
+                        setCardNum(cal);
+                    } else {
+                        message.error(delRes.msg || '删除项目时发生错误');
+                    }
+                } catch (error) {
+                    message.error(`删除失败!`);
+                }
+            },
+            onCancel() {
+                // 可选：处理取消操作
+            },
+        });
+    };
+
+    const handleUpload = () => {
+        
+    };
 
     const fetchCardInfo = async () => {
         try {
@@ -97,7 +143,7 @@ const Project: React.FC = () => {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     useEffect(() =>  {
         fetchCardInfo();
@@ -127,10 +173,25 @@ const Project: React.FC = () => {
                             </div>
                             <div style={{display: 'flex', flexDirection: 'row'}}>
                             {cardNum !== 0 && cardInfo.slice(0, 5).map((info, index) => (
-                                <CardBox info={info} key={index} />
+                                <CardBox info={info} key={index} del={handleDelete} />
                             ))}
                             </div>
-                            <div>3</div>
+                            <div style={inilneContentDivThree}>
+                                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', height: '100%'}}>
+                                    <div style={{ width: '65%', height: '100%' }}>
+                                        <Title level={5} style={{ margin: '25px 0 12px 20px', color: 'black'}}>异常用例列表</Title>
+                                    </div>
+                                    <div style={{ width: '20%', height: '100%' }}>
+                                        <DateSelect />
+                                    </div>
+                                    <div style={{ width: '10%', height: '100%' }}>
+                                        <SelectButton />
+                                    </div>
+                                </div>
+                                <div style={{display: 'flex', width: '100%', height: '100%'}}>
+                                    {/* <HeaderSider /> */}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div style={contentRight}>
