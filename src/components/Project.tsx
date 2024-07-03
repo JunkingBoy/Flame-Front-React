@@ -2,8 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { 
     Typography,
     message,
-    Modal
+    Modal,
+    Form,
+    Input,
+    Upload
  } from 'antd';
+
+import type { UploadProps } from 'antd';
 
 import {
     mainDiv,
@@ -14,7 +19,7 @@ import {
 
 import { ProjectInfo } from '../interface/ProjectInterface';
 import { DataContainer } from '../utils/InterfaceClass';
-import { getProjectInfo, delPro } from '../apis/Project';
+import { getProjectInfo, delPro, modifyPro } from '../apis/Project';
 
 import ClickForm from './ClickForm';
 import CardBox from './CardBox';
@@ -22,6 +27,7 @@ import CardBox from './CardBox';
 import { DateSelect, SelectButton } from './DateSelect';
 import { HeaderSider } from './Menu';
 import SearchSelf from './Search';
+import { useForm } from 'antd/es/form/Form';
 
 const { Title } = Typography;
 
@@ -90,6 +96,8 @@ const inilneContentDivThree: React.CSSProperties = {
 const Project: React.FC = () => {
     let [cardNum, setCardNum] = useState<number>(0);
     let [cardInfo, setCardInfo] = useState<ProjectInfo[]>([]);
+    let [projectInfo, setProjectInfo] = useState({id: 0, name: '', desc: ''})
+    let [form] = useForm();
 
     const handleSetProCount = async () => {
         let currentCount: number = cardNum;
@@ -97,14 +105,13 @@ const Project: React.FC = () => {
         setCardNum(currentCount);
     };
 
-    const handleDelete = (name: string, id: number) => {
+    const handleDelete = (id: number, name: string) => {
         Modal.confirm({
             title: '确认删除?',
             content: `确定要删除项目"${name}"吗？`,
             okText: '确认',
             cancelText: '取消',
             onOk: async () => {
-                console.log(22222);
                 try {
                     let delRes: DataContainer<any> = await delPro(id);
     
@@ -125,9 +132,81 @@ const Project: React.FC = () => {
         });
     };
 
-    const handleUpload = () => {
-        
+    const handleModify = (id: number, name: string, desc: string) => {
+        setProjectInfo({id, name, desc});
+        // console.log(projectInfo);
+        // console.log(id, name, desc);
+        Modal.confirm({
+            title: '修改项目信息',
+            content: (
+                <Form
+                    layout="vertical"
+                    form={form}
+                    name='project_modify'
+                    initialValues={{
+                        title: projectInfo.name,
+                        description: projectInfo.desc
+                    }}
+                    onFinish={() => modify(projectInfo)}
+                >
+                    <Form.Item
+                        name='title'
+                        label='项目名称'
+                        rules={[{ required: true, message: '请输入项目名称!' }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name='description'
+                        label='项目描述'
+                    >
+                        <Input.TextArea maxLength={100} />
+                    </Form.Item>
+                </Form>
+            ),
+            okText: '修改',
+            cancelText: '取消',
+            onOk: () => form.submit(),
+            onCancel() {},
+            destroyOnClose: true,
+            keyboard: false
+        });
     };
+
+    const handleUpload = () => {
+        console.log(11111)
+        Modal.confirm(<Upload {...props} />);
+    }
+
+    const modify = async (values: any) => {
+        try {
+            let modifyRes: any = await modifyPro(values.id, values.name, values.desc);
+
+            if (modifyRes.code === 200) {
+                message.info('修改成功');
+                fetchCardInfo();
+            } else {
+                message.error(modifyRes.msg || '修改项目时发生错误');
+            }
+        } catch (error) {
+            message.error('修改失败');
+        }
+    }
+
+    const props: UploadProps = {
+        action: '//jsonplaceholder.typicode.com/posts/',
+        listType: 'picture',
+        previewFile(file) {
+          console.log('Your upload file:', file);
+          // Your process logic. Here we just mock to the same file
+          return fetch('https://next.json-generator.com/api/json/get/4ytyBoLK8', {
+            method: 'POST',
+            body: file,
+          })
+            .then((res) => res.json())
+            .then(({ thumbnail }) => thumbnail);
+        },
+      };
 
     const fetchCardInfo = async () => {
         try {
@@ -173,7 +252,7 @@ const Project: React.FC = () => {
                             </div>
                             <div style={{display: 'flex', flexDirection: 'row'}}>
                             {cardNum !== 0 && cardInfo.slice(0, 5).map((info, index) => (
-                                <CardBox info={info} key={index} del={handleDelete} />
+                                <CardBox info={info} key={index} del={handleDelete} modify={handleModify} upload={handleUpload} />
                             ))}
                             </div>
                             <div style={inilneContentDivThree}>
