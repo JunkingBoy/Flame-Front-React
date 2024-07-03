@@ -2,7 +2,7 @@
  * @Author: Lucifer
  * @Data: Do not edit
  * @LastEditors: Lucifer
- * @LastEditTime: 2024-07-03 12:52:34
+ * @LastEditTime: 2024-07-03 23:51:20
  * @Description: 
  */
 import React, { useState } from 'react';
@@ -77,7 +77,7 @@ const CardBox: React.FC<{ info: ProjectInfo, del: (id: number, name: string) => 
         //     message.error(`${info.file.name} file upload failed.`);
         //   }
         // },
-      };
+    };
 
     const showModal = () => {
         console.log(111)
