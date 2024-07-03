@@ -1,6 +1,7 @@
 import { ProportionInfo, UserCareerPercent } from "../interface/ProportionInterface";
 import { ExtractProToPieData } from "../interface/ExtractInterface";
 import { UserCareerData } from "../interface/UserInterface";
+import { ProjectCaseData } from "../interface/ProjectInterface";
 
 function calProportion(proName: string, programData: ExtractProToPieData[] ): ProportionInfo {
     let proportion: ProportionInfo = {proProgramName: '', data: []};
@@ -63,4 +64,23 @@ function calPercent(data: UserCareerData[]): UserCareerPercent {
     return response;
 }
 
-export { calProportion, calPercent }
+function calCompletionRate(data: ProjectCaseData): number {
+    let dataAll: number = data.all_case;
+    let dataPass: number = data.pass_case;
+
+    if (dataAll !== undefined && dataAll !== 0) {
+        let calCompletionRate: number = dataPass / dataAll;
+        let completionRateStr: string = calCompletionRate.toFixed(2);
+        let resCompletionRate: number = Number.parseFloat(completionRateStr) * 100;
+
+        return resCompletionRate;
+    } else {
+        return 0;
+    }
+}
+
+export {
+    calProportion,
+    calPercent,
+    calCompletionRate
+}

@@ -10,6 +10,10 @@ interface Values {
     description?: string;
 }
 
+interface ProPromise {
+    onProAdd: () => Promise<void>;
+}
+
 const clickFormCss: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -18,7 +22,7 @@ const clickFormCss: React.CSSProperties = {
     height: '100%'
 }
 
-const ClickForm: React.FC = () => {
+const ClickForm: React.FC<ProPromise> = ({ onProAdd }) => {
     let [form] = Form.useForm();
     let [formValues, setFormValues] = useState<Values>();
     let [open, setOpen] = useState(false);
@@ -30,6 +34,7 @@ const ClickForm: React.FC = () => {
                 setFormValues(values);
                 setOpen(false);
                 form.resetFields();
+                await onProAdd();
             }
         } catch (error) {
             console.log(error);
@@ -50,6 +55,7 @@ const ClickForm: React.FC = () => {
                     okButtonProps={{ autoFocus: true, htmlType: 'submit' }}
                     onCancel={() => setOpen(false)}
                     destroyOnClose
+                    maskClosable
                     modalRender={(dom) => (
                         <Form
                             layout="vertical"
@@ -73,7 +79,7 @@ const ClickForm: React.FC = () => {
                     </Form.Item>
                 </Modal>
             </div>
-            <div style={{ width: '80%', height: '100%', margin: '20px 0 12px 20px' }}>
+            <div style={{ width: '80%', height: '100%', margin: '20px 0 12px 35px' }}>
                 <GetTemplate />
             </div>
         </div>
