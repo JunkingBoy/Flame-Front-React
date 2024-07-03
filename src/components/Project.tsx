@@ -8,7 +8,7 @@ import {
     Upload
  } from 'antd';
 
-import type { UploadProps } from 'antd';
+import type { Descriptions, UploadProps } from 'antd';
 
 import {
     mainDiv,
@@ -28,6 +28,7 @@ import { DateSelect, SelectButton } from './DateSelect';
 import { HeaderSider } from './Menu';
 import SearchSelf from './Search';
 import { useForm } from 'antd/es/form/Form';
+import { title } from 'process';
 
 const { Title } = Typography;
 
@@ -92,12 +93,20 @@ const inilneContentDivThree: React.CSSProperties = {
  * 初次进入该组件的时候应该去请求一遍card相关api.获取到card信息设置到Card对应的属性当中
  * 当新建项目的时候应该再次请求card信息api
  * 删除项目时cardNum也会被改变
+ * **解决异步问题.常用useEffect让组件重新渲染**
  */
 const Project: React.FC = () => {
     let [cardNum, setCardNum] = useState<number>(0);
     let [cardInfo, setCardInfo] = useState<ProjectInfo[]>([]);
     let [projectInfo, setProjectInfo] = useState({id: 0, name: '', desc: ''})
     let [form] = useForm();
+
+    const outSetPro = (name: string, desc: string) => {
+        form.setFieldsValue({
+            title: name,
+            description: desc
+        });
+    }
 
     const handleSetProCount = async () => {
         let currentCount: number = cardNum;
@@ -134,8 +143,6 @@ const Project: React.FC = () => {
 
     const handleModify = (id: number, name: string, desc: string) => {
         setProjectInfo({id, name, desc});
-        // console.log(projectInfo);
-        // console.log(id, name, desc);
         Modal.confirm({
             title: '修改项目信息',
             content: (
@@ -144,10 +151,14 @@ const Project: React.FC = () => {
                     form={form}
                     name='project_modify'
                     initialValues={{
-                        title: projectInfo.name,
-                        description: projectInfo.desc
+                        title: name,
+                        description: desc
                     }}
-                    onFinish={() => modify(projectInfo)}
+                    onFinish={async (values) => {
+                        console.log("====" + values + "====");
+                        await modify(id, values);
+                        form.resetFields();
+                    }}
                 >
                     <Form.Item
                         name='title'
@@ -167,20 +178,40 @@ const Project: React.FC = () => {
             okText: '修改',
             cancelText: '取消',
             onOk: () => form.submit(),
-            onCancel() {},
+            onCancel: () => {form.resetFields();},
             destroyOnClose: true,
             keyboard: false
         });
     };
 
     const handleUpload = () => {
-        console.log(11111)
-        Modal.confirm(<Upload {...props} />);
+        Modal.confirm({
+            title: 'Upload File',
+            content: (
+                <Upload
+                    name="file"
+                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload" // 替换为你的上传接口
+                    onChange={(info) => {
+                        if (info.file.status === 'done') {
+                            message.success(`${info.file.name} file uploaded successfully`);
+                        } else if (info.file.status === 'error') {
+                            message.error(`${info.file.name} file upload failed.`);
+                        }
+                    }}
+                >
+                </Upload>
+            ),
+            okText: 'Upload',
+            cancelText: 'Cancel',
+            onOk: () => {
+                // 可以在这里处理确认上传的逻辑
+            },
+        });
     }
 
-    const modify = async (values: any) => {
+    const modify = async (id: number, values: any) => {
         try {
-            let modifyRes: any = await modifyPro(values.id, values.name, values.desc);
+            let modifyRes: any = await modifyPro(id, values.title, values.description);
 
             if (modifyRes.code === 200) {
                 message.info('修改成功');
@@ -206,7 +237,7 @@ const Project: React.FC = () => {
             .then((res) => res.json())
             .then(({ thumbnail }) => thumbnail);
         },
-      };
+    };
 
     const fetchCardInfo = async () => {
         try {
@@ -226,7 +257,8 @@ const Project: React.FC = () => {
 
     useEffect(() =>  {
         fetchCardInfo();
-    }, [cardNum]);
+        outSetPro(projectInfo.name, projectInfo.desc);
+    }, [cardNum, projectInfo]);
 
     return (
         <div style={mainDiv}>
