@@ -1,3 +1,10 @@
+/*
+ * @Author: Lucifer
+ * @Data: Do not edit
+ * @LastEditors: Lucifer
+ * @LastEditTime: 2024-07-03 10:32:18
+ * @Description: project api
+ */
 import { BASE_URL, axiosInstance } from "../config/HeaderInstance";
 
 import { DataContainer } from "../utils/InterfaceClass";
@@ -24,8 +31,20 @@ async function delPro(projectId: number): Promise<DataContainer<any>> {
     return new DataContainer(response.data.code, response.data.msg, response.data.data);
 }
 
+async function modifyPro(projectId: number, projectName: string, projectDesc?: string): Promise<DataContainer<any>> {
+    console.log(projectId, projectName, projectDesc);
+    let response: any = await axiosInstance.put(`${BASE_URL}/project/modify`, {
+        project_id: projectId,
+        project_name: projectName,
+        project_desc: projectDesc
+    });
+
+    return new DataContainer(response.data.code, response.data.msg, response.data.data);
+}
+
 export {
     createPro,
     delPro,
+    modifyPro,
     getProjectInfo
 }
