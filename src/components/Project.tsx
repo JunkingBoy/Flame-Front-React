@@ -267,7 +267,9 @@ const Project: React.FC = () => {
                     </div>
                     <div style={contentRight}>
                         <div style={inlineContentRight}>
-                            <div>1</div>
+                            <div style={{ width: '85%', height: '100%' }}>
+                                <Title level={5} style={{ margin: '25px 0 12px 20px', color: 'black'}}>项目用例分布</Title>
+                            </div>
                             <div>2</div>
                             <div>3</div>
                         </div>

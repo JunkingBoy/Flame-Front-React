@@ -9,7 +9,7 @@ interface CaseResponseType {
 
 async function getTemplate(type: string): Promise<void> {
     try {
-        let response = await axiosInstance.get(`${BASE_URL}/case/download/case_template`, {
+        let response = await axiosInstance.get(`${BASE_URL}/case/parse/download/case_template`, {
             responseType: 'blob', // 直接在config中明确指定responseType
             params: {
                 type: type,
