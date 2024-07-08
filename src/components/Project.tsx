@@ -4,11 +4,8 @@ import {
     message,
     Modal,
     Form,
-    Input,
-    Upload
+    Input
  } from 'antd';
-
-import type { Descriptions, UploadProps } from 'antd';
 
 import {
     mainDiv,
@@ -28,7 +25,6 @@ import { DateSelect, SelectButton } from './DateSelect';
 import { HeaderSider } from './Menu';
 import SearchSelf from './Search';
 import { useForm } from 'antd/es/form/Form';
-import { title } from 'process';
 
 const { Title } = Typography;
 
@@ -276,6 +272,7 @@ const Project: React.FC = () => {
                             <div>2</div>
                             <div style={{ width: '85%', height: '100%' }}>
                                 {/* 渲染用例卡片的逻辑 */}
+
                             </div>
                         </div>
                     </div>

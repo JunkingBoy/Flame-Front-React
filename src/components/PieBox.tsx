@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell } from 'recharts';
 
 import { ExtractProToPie } from '../interface/ExtractInterface';
 
-const HeaderContentPie: React.FC<{ data: ExtractProToPie[] }> = ({ data }) => {
+const Pie: React.FC<{ data: ExtractProToPie[] }> = ({ data }) => {
     const colors: string[] = ['#82ca9d', '#ff4d4f', '#40a9ff'];
 
     return (
@@ -19,4 +19,4 @@ const HeaderContentPie: React.FC<{ data: ExtractProToPie[] }> = ({ data }) => {
     );
 }
 
-export { HeaderContentPie }
+export { Pie }
