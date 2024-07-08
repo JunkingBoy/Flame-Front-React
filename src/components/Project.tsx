@@ -98,7 +98,10 @@ const inilneContentDivThree: React.CSSProperties = {
 const Project: React.FC = () => {
     let [cardNum, setCardNum] = useState<number>(0);
     let [cardInfo, setCardInfo] = useState<ProjectInfo[]>([]);
-    let [projectInfo, setProjectInfo] = useState({id: 0, name: '', desc: ''})
+    let [projectInfo, setProjectInfo] = useState({id: 0, name: '', desc: ''});
+    // 最终由父组件决定渲染什么用例的情况.子组件确定是否发送http请求获取信息
+    let [funCase, setFuncCase] = useState<Boolean>(false);
+    let [apiCase, setApiCase] = useState<Boolean>(false);
     let [form] = useForm();
 
     const outSetPro = (name: string, desc: string) => {
@@ -271,7 +274,9 @@ const Project: React.FC = () => {
                                 <Title level={5} style={{ margin: '25px 0 12px 20px', color: 'black'}}>项目用例分布</Title>
                             </div>
                             <div>2</div>
-                            <div>3</div>
+                            <div style={{ width: '85%', height: '100%' }}>
+                                {/* 渲染用例卡片的逻辑 */}
+                            </div>
                         </div>
                     </div>
                 </div>

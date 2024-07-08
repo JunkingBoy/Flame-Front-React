@@ -1,3 +1,10 @@
+/*
+ * @Author: Lucifer
+ * @Data: Do not edit
+ * @LastEditors: Lucifer
+ * @LastEditTime: 2024-07-08 14:27:16
+ * @Description: 
+ */
 import { BASE_URL, axiosInstance, axiosUpData } from "../config/HeaderInstance";
 import { DataContainer } from "../utils/InterfaceClass";
 
