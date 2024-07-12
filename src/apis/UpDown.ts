@@ -1,3 +1,10 @@
+/*
+ * @Author: Lucifer
+ * @Data: Do not edit
+ * @LastEditors: Lucifer
+ * @LastEditTime: 2024-07-12 13:44:15
+ * @Description: 
+ */
 import { BASE_URL, axiosInstance, axiosUpData } from "../config/HeaderInstance";
 import { DataContainer } from "../utils/InterfaceClass";
 
@@ -9,11 +16,8 @@ interface CaseResponseType {
 
 async function getTemplate(type: string): Promise<void> {
     try {
-        let response = await axiosInstance.get(`${BASE_URL}/case/download/case_template`, {
+        let response = await axiosInstance.get(`${BASE_URL}/case/parse/download/case_template/${type}`, {
             responseType: 'blob', // 直接在config中明确指定responseType
-            params: {
-                type: type,
-            }
         });
 
         if (response.status === 200) {

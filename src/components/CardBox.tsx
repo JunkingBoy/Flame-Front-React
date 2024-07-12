@@ -2,7 +2,7 @@
  * @Author: Lucifer
  * @Data: Do not edit
  * @LastEditors: Lucifer
- * @LastEditTime: 2024-07-03 23:51:20
+ * @LastEditTime: 2024-07-04 20:43:56
  * @Description: 
  */
 import React, { useState } from 'react';
@@ -18,7 +18,7 @@ import {
     message,
     Upload
  } from 'antd';
-import type { ProgressProps, UploadProps } from 'antd';
+import type { ProgressProps } from 'antd';
 import {
     EllipsisOutlined,
     EditOutlined,
@@ -28,6 +28,7 @@ import {
 
 import { ProjectInfo } from '../interface/ProjectInterface';
 import { calCompletionRate } from '../utils/Calculate';
+import { pushFile } from '../apis/UpDown';
 
 const { Meta } = Card;
 const { confirm } = Modal;
@@ -57,43 +58,42 @@ const twoColors: ProgressProps['strokeColor'] = {
  * 抽象出传入的数据 -> 敲定api
  * @returns 返回页面盒子组件
  */
-const CardBox: React.FC<{ info: ProjectInfo, del: (id: number, name: string) => void, modify: (id: number, name: string, desc: string) => void, upload: () => void }> = ({ info, del, modify, upload }) => {
+const CardBox: React.FC<{ info: ProjectInfo, del: (id: number, name: string) => void, modify: (id: number, name: string, desc: string) => void }> = ({ info, del, modify }) => {
     let [percent, setPercent] = useState<number>(calCompletionRate(info.case));
     const [modalVisible, setModalVisible] = useState(false);
 
-    const props: UploadProps = {
+    const props = {
         name: 'file',
-        action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
-        headers: {
-          authorization: 'authorization-text',
+        customRequest: async (options: any) => {
+            let upRes: any = await pushFile(options.file, 'func', info.project_id.toString());
+
+            if (upRes.code === 200) {
+                message.success('上传成功');
+            } else {
+                message.error('上传失败');
+            }
         },
-        // onChange(info) {
-        //   if (info.file.status !== 'uploading') {
-        //     console.log(info.file, info.fileList);
-        //   }
-        //   if (info.file.status === 'done') {
-        //     message.success(`${info.file.name} file uploaded successfully`);
-        //   } else if (info.file.status === 'error') {
-        //     message.error(`${info.file.name} file upload failed.`);
-        //   }
-        // },
+        onChange(info: any) {
+          if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+          }
+          if (info.file.status === 'done') {
+            Modal.success({
+              content: `${info.file.name} file uploaded successfully.`,
+            });
+          } else if (info.file.status === 'error') {
+            Modal.error({
+              content: `${info.file.name} file upload failed.`,
+            });
+          }
+        },
     };
 
     const showModal = () => {
-        console.log(111)
         setModalVisible(true);
-        <Upload {...props}>
-            <Button>
-                <UploadOutlined /> 选择文件
-            </Button>
-        </Upload>
     };
 
-    const handleOk = async () => {
-        setModalVisible(false);
-    };
-
-    const handleCancel = () => {
+    const handleSwitch = () => {
         setModalVisible(false);
     };
 
@@ -107,7 +107,7 @@ const CardBox: React.FC<{ info: ProjectInfo, del: (id: number, name: string) => 
 
     const addMenu = (
         <Menu>
-            <Menu.Item key="func" onClick={() => upload()}>
+            <Menu.Item key="func" onClick={() => showModal()}>
             新增功能测试用例
             </Menu.Item>
             {/* <Menu.Item key="api" onClick={() => del(info.project_name, info.project_id)}>
@@ -122,24 +122,6 @@ const CardBox: React.FC<{ info: ProjectInfo, del: (id: number, name: string) => 
             修改项目信息
             </Menu.Item>
         </Menu>
-    );
-
-    const uploadModal = (
-        <Modal
-            title="上传功能测试用例文件"
-            visible={modalVisible}
-            onOk={handleOk}
-            onCancel={handleCancel}
-        >
-            <Upload beforeUpload={() => {
-                return false;
-            }}
-            >
-                <Button>
-                    <UploadOutlined /> 选择文件
-                </Button>
-            </Upload>
-        </Modal>
     );
 
     return (
@@ -157,7 +139,6 @@ const CardBox: React.FC<{ info: ProjectInfo, del: (id: number, name: string) => 
                     </Dropdown>
                 ]}
                 hoverable={true}
-                // loading={true}
             >
                 <Meta
                     title={info.project_name}
@@ -169,6 +150,11 @@ const CardBox: React.FC<{ info: ProjectInfo, del: (id: number, name: string) => 
                 <Tooltip title="用例数量">
                     <span>用例数量: {info.case.all_case}</span>
                 </Tooltip>
+                <Modal title="上传文件" visible={modalVisible} onOk={handleSwitch} onCancel={handleSwitch} okText='确认' cancelText='取消'>
+                    <Upload {...props} accept='.xlsx,.xls'>
+                        <Button icon={<UploadOutlined />}>点击上传</Button>
+                    </Upload>
+                </Modal>
             </Card>
     );
 }

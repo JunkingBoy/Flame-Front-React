@@ -1,3 +1,10 @@
+/*
+ * @Author: Lucifer
+ * @Data: Do not edit
+ * @LastEditors: Lucifer
+ * @LastEditTime: 2024-07-08 12:43:17
+ * @Description: 
+ */
 import { BASE_URL, axiosInstance } from "../config/HeaderInstance";
 import { LoginData, RegisterData, UserProBugData, UserCarDataResponse } from "../interface/UserInterface";
 import { ProgramBugDetailResponse, ProgramInfo } from "../interface/ProgramInterface";
@@ -16,7 +23,7 @@ async function login(username: string, password: string): Promise<DataContainer<
 
 async function register(phone: number, password: string, confirmPassword: string): Promise<DataContainer<RegisterData>> {
     let response: any = await axiosInstance.post(`${BASE_URL}/user/register`, {
-        phone: phone,
+        phone: phone.toString(),
         password: password,
         password_confirm: confirmPassword
     });
