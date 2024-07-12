@@ -10,7 +10,7 @@ const GetTemplate: React.FC = () => {
 
     // 这里发送请求到后端获取对应的用例模板
     const handleMenuClick: MenuProps['onClick'] = async (e) => {
-        if (e.key === '1') {
+        if (e.key === 'func') {
             setOpen(false);
             await getTemplate(e.key);
         }
@@ -25,11 +25,11 @@ const GetTemplate: React.FC = () => {
     const items: MenuProps['items'] = [
     {
         label: '功能测试用例模板',
-        key: '1',
+        key: 'func',
     },
     {
         label: '接口测试用例模板',
-        key: '2',
+        key: 'api',
     }
     ];
 

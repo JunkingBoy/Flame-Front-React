@@ -80,23 +80,25 @@ export class ProCalContainer<T> {
 
 // 这个类用来处理从获取用例信息接口请求回来的所有用例数据转化为pie组件可以解析的数据
 export class ExtractProToPie {
+    private type: string = '';
     private name: string = '';
     private value: string = '';
 
-    private valueArray: { name: string; value: string }[] = [];;
+    private valueArray: { name: string; type: string; value: string }[] = [];;
 
     constructor (input: any) {
         if (Array.isArray(input)) {
             for (let index = 0; index < input.length; index++) {
                 const element = input[index];
-                this.name = element.case_type_name;
-                this.value = element.case_type_value;
-                this.valueArray.push({ name: this.name, value: this.value });
+                this.name = element.case_name;
+                this.type = element.case_type;
+                this.value = element.case_detail;
+                this.valueArray.push({ name: this.name, type: this.type, value: this.value });
             }
         }
     }
 
-    public getValueArray(index?: number): { name: string; value: string } | { name: string; value: string }[] {
+    public getValueArray(index?: number): { name: string; type: string; value: string } | { name: string; type: string; value: string }[] {
         if (index !== undefined) {
             return this.valueArray[index];
         } else {
