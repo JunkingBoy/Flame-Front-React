@@ -31,6 +31,7 @@ import { calCompletionRate } from '../utils/Calculate';
 import { pushFile } from '../apis/UpDown';
 
 const { Meta } = Card;
+const { confirm } = Modal;
 
 const mainBox: React.CSSProperties = {
     display:'flex',
