@@ -2,7 +2,7 @@
  * @Author: Lucifer
  * @Data: Do not edit
  * @LastEditors: Lucifer
- * @LastEditTime: 2024-07-04 20:43:56
+ * @LastEditTime: 2024-07-14 01:55:06
  * @Description: 
  */
 import React, { useState } from 'react';
@@ -31,7 +31,6 @@ import { calCompletionRate } from '../utils/Calculate';
 import { pushFile } from '../apis/UpDown';
 
 const { Meta } = Card;
-const { confirm } = Modal;
 
 const mainBox: React.CSSProperties = {
     display:'flex',
