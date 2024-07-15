@@ -23,6 +23,8 @@ import { CardBox } from './CardBox';
 
 import { DateSelect, SelectButton } from './DateSelect';
 import { HeaderSider } from './Menu';
+import { DateSelect, SelectButton } from './DateSelect';
+import { HeaderSider } from './Menu';
 import SearchSelf from './Search';
 import { useForm } from 'antd/es/form/Form';
 
@@ -78,6 +80,19 @@ const inlineContentInlineLeft: React.CSSProperties = {
     height: '100%',
 }
 
+const inilneContentDivThree: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    height: '100%'
+}
+
+/**
+ * 初次进入该组件的时候应该去请求一遍card相关api.获取到card信息设置到Card对应的属性当中
+ * 当新建项目的时候应该再次请求card信息api
+ * 删除项目时cardNum也会被改变
+ * **解决异步问题.常用useEffect让组件重新渲染**
+ */
 const inilneContentDivThree: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -237,6 +252,7 @@ const Project: React.FC = () => {
                                     <Title level={5} style={{ margin: '25px 0 12px 20px', color: 'black'}}>我的项目</Title>
                                 </div>
                                 <div style={{ width: '15%', height: '100%' }}>
+                                    <ClickForm onProAdd={handleSetProCount} />
                                     <ClickForm onProAdd={handleSetProCount} />
                                 </div>
                             </div>
