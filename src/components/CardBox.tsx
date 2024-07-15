@@ -2,7 +2,7 @@
  * @Author: Lucifer
  * @Data: Do not edit
  * @LastEditors: Lucifer
- * @LastEditTime: 2024-07-04 20:43:56
+ * @LastEditTime: 2024-07-15 18:11:05
  * @Description: 
  */
 import React, { useState } from 'react';
@@ -31,7 +31,6 @@ import { calCompletionRate } from '../utils/Calculate';
 import { pushFile } from '../apis/UpDown';
 
 const { Meta } = Card;
-const { confirm } = Modal;
 
 const mainBox: React.CSSProperties = {
     display:'flex',
@@ -159,4 +158,45 @@ const CardBox: React.FC<{ info: ProjectInfo, del: (id: number, name: string) => 
     );
 }
 
-export default CardBox;
+const PlanCard: React.FC<{ info: ProjectInfo }> = ({ info }) => {
+    const addMenu = (
+        <Menu>
+            <Menu.Item key="func">
+            新建计划
+            </Menu.Item>
+        </Menu>
+    );
+
+    const editMenu = (
+        <Menu>
+            <Menu.Item key="edit">
+            修改计划用例
+            </Menu.Item>
+        </Menu>
+    );
+
+    return (
+        <Card
+            style={{ margin: '15px 10px 15px 50px', borderRadius: '10px', width: '70%' }}
+            actions={[
+                <Dropdown overlay={addMenu}>
+                    <DiffFilled key='setting' />
+                </Dropdown>,
+                <Dropdown overlay={editMenu}>
+                    <EditOutlined key='edit' />
+                </Dropdown>
+            ]}
+            hoverable={true}
+        >
+            <Meta
+                title={info.project_name}
+                description={info.project_desc}
+            />
+        </Card>
+    )
+}
+
+export {
+    CardBox,
+    PlanCard
+};

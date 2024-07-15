@@ -2,14 +2,7 @@
  * @Author: Lucifer
  * @Data: Do not edit
  * @LastEditors: Lucifer
- * @LastEditTime: 2024-07-12 14:21:00
- * @Description: 
- */
-/*
- * @Author: Lucifer
- * @Data: Do not edit
- * @LastEditors: Lucifer
- * @LastEditTime: 2024-07-08 12:44:45
+ * @LastEditTime: 2024-07-16 00:52:12
  * @Description: project api
  */
 import { BASE_URL, axiosInstance } from "../config/HeaderInstance";
