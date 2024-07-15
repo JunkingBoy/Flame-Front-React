@@ -46,10 +46,10 @@ const SiderMenu: React.FC = () => {
         getItems('个人数据', '/home', <FundFilled className='work-output' />),
         getItems('开始测试', 'sub1', <ScheduleFilled className='start-work' />, [
             getItems('新建项目', '/home/project', <FileAddFilled />),
-            getItems('测试计划', '/home/testplan', <EditFilled />),
-            getItems('执行用例', '/home/testcase', <ToolFilled />, [
-                getItems('功能用例', '/home/testcase/func', <CodeFilled />),
-                getItems('接口用例', '/home/testcase/api', <ApiFilled />)
+            getItems('测试计划', '/home/plan', <EditFilled />),
+            getItems('执行用例', '', <ToolFilled />, [
+                getItems('功能用例', '/home/func', <CodeFilled />),
+                getItems('接口用例', '/home/api', <ApiFilled />)
             ]),
             getItems('测试结果', '/home/testresult', <CheckSquareFilled />),
             getItems('测试报告', '/home/testreport', <PieChartFilled />),

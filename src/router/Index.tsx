@@ -14,6 +14,7 @@ import Project from "../components/Project";
 import PC from "../components/PersonalCenter";
 
 import Auth from "./RouteAuth";
+import { Plan } from "../components/Plan";
 
 const routes = [
     { path: "/", element: <Login /> },
@@ -29,7 +30,8 @@ const routes = [
         children:
         [
             { index: true, element: <PC /> },
-            { path: "project", element: <Project /> }
+            { path: "project", element: <Project /> },
+            { path: "plan", element: <Plan /> }
         ]
     },
     { path: "/*", element: <NotFind /> }

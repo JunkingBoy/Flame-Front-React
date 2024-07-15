@@ -19,7 +19,7 @@ import { DataContainer } from '../utils/InterfaceClass';
 import { getProjectInfo, delPro, modifyPro } from '../apis/Project';
 
 import ClickForm from './ClickForm';
-import CardBox from './CardBox';
+import { CardBox } from './CardBox';
 
 import { DateSelect, SelectButton } from './DateSelect';
 import { HeaderSider } from './Menu';
@@ -154,7 +154,6 @@ const Project: React.FC = () => {
                         description: desc
                     }}
                     onFinish={async (values) => {
-                        console.log("====" + values + "====");
                         await modify(id, values);
                         form.resetFields();
                     }}
