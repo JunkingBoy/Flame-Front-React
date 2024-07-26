@@ -2,7 +2,7 @@
  * @Author: Lucifer
  * @Data: Do not edit
  * @LastEditors: Lucifer
- * @LastEditTime: 2024-07-16 22:00:41
+ * @LastEditTime: 2024-07-26 19:26:25
  * @Description: 
  */
 import React, { useState } from 'react';
@@ -65,7 +65,7 @@ const CardBox: React.FC<{ info: ProjectInfo, del: (id: number, name: string) => 
         name: 'file',
         customRequest: async (options: any) => {
             // todo: 上传文件是否之前不知道是否成功.如果成功返回全部.如果失败返回失败字段.所以这个传参是否需要
-            let upRes: any = await pushFile(options.file, 'func', info.project_id.toString(), '0');
+            let upRes: any = await pushFile(options.file, 'func', info.project_id.toString());
 
             if (upRes.code === 200) {
                 message.success('上传成功');
@@ -148,7 +148,7 @@ const CardBox: React.FC<{ info: ProjectInfo, del: (id: number, name: string) => 
                     <Progress percent={percent} strokeColor={twoColors} />
                 </Flex>
                 <Tooltip title="用例数量">
-                    <span>用例数量: {info.case.all_case}</span>
+                    {/* <span>用例数量: {info.case.all_case}</span> */}
                 </Tooltip>
                 <Modal title="上传文件" visible={modalVisible} onOk={handleSwitch} onCancel={handleSwitch} okText='确认' cancelText='取消'>
                     <Upload {...props} accept='.xlsx,.xls'>
