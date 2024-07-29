@@ -2,7 +2,7 @@
  * @Author: Lucifer
  * @Data: Do not edit
  * @LastEditors: Lucifer
- * @LastEditTime: 2024-07-26 19:26:25
+ * @LastEditTime: 2024-07-30 02:31:48
  * @Description: 
  */
 import React, { useState } from 'react';
@@ -148,7 +148,7 @@ const CardBox: React.FC<{ info: ProjectInfo, del: (id: number, name: string) => 
                     <Progress percent={percent} strokeColor={twoColors} />
                 </Flex>
                 <Tooltip title="用例数量">
-                    {/* <span>用例数量: {info.case.all_case}</span> */}
+                    <span>用例数量: {info.case.all_case}</span>
                 </Tooltip>
                 <Modal title="上传文件" visible={modalVisible} onOk={handleSwitch} onCancel={handleSwitch} okText='确认' cancelText='取消'>
                     <Upload {...props} accept='.xlsx,.xls'>
