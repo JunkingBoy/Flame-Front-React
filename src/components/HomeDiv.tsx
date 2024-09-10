@@ -18,7 +18,7 @@ import { ProportionInfo, UserCareerPercent } from "../interface/ProportionInterf
 import { ProgramInfo, ProgramBugDetail, BugDetail } from "../interface/ProgramInterface";
 
 import { HeaderSider } from "./Menu";
-import { HeaderContentPie } from "./HeaderContentPie";
+import { PieSelf } from "./PieBox";
 import { HeaderContentData } from "./HeaderContentData";
 import { RightRadar } from "./Radar";
 import { SlefFunnel } from "./FunneSlef";
@@ -60,7 +60,7 @@ const HomeHeaderDiv: React.FC<HeaderDataProps> = ({ programNameList, pagePieData
         <div style={homeHeaderStyle}>
             <HeaderSider programNameList={programNameList} onProClick={headerMenuClick} />
             <div style={homeHeaderContentStyle}>
-                <HeaderContentPie data={currentPieData} />
+                <PieSelf data={currentPieData} />
                 <HeaderContentData proportionData={currentContentData} nameData={currentContentNameData} />
             </div>
         </div>
