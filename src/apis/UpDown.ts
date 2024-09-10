@@ -2,7 +2,7 @@
  * @Author: Lucifer
  * @Data: Do not edit
  * @LastEditors: Lucifer
- * @LastEditTime: 2024-07-12 13:44:15
+ * @LastEditTime: 2024-07-26 23:14:06
  * @Description: 
  */
 import { BASE_URL, axiosInstance, axiosUpData } from "../config/HeaderInstance";
@@ -41,15 +41,14 @@ async function getTemplate(type: string): Promise<void> {
     }
 }
 
-async function pushFile(file: File, type: string, projectId: string, errOrAll?: string): Promise<DataContainer<any>> {
+async function pushFile(file: File, type: string, projectId: string): Promise<DataContainer<any>> {
     let formData = new FormData();
     formData.append('file', file);
+    formData.append('type', type);
+    formData.append('project_id', projectId);
 
     let headers = {
         'Content-Type': 'multipart/form-data',
-        'type': type,
-        'projectId': projectId,
-        'errOrAll': '0'
     }
 
     let response: any = await axiosUpData.post(`${BASE_URL}/case/parse/upload`, formData, {headers});

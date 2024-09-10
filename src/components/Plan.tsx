@@ -103,7 +103,9 @@ const Plan: React.FC = () => {
                 <div style={{display: 'flex', justifyContent: 'center', margin: '10px 10px 10px 10px'}}>
                     <CalendarSelf />
                 </div>
-                <div>2</div>
+                <div style={{display: 'flex', flexDirection: 'column', width: '85%', height: '100%'}}>
+                    <div>测试用例卡片</div>
+                </div>
             </div>
         </div>
     );

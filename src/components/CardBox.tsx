@@ -2,7 +2,7 @@
  * @Author: Lucifer
  * @Data: Do not edit
  * @LastEditors: Lucifer
- * @LastEditTime: 2024-07-15 18:11:05
+ * @LastEditTime: 2024-07-30 02:31:48
  * @Description: 
  */
 import React, { useState } from 'react';
@@ -64,6 +64,7 @@ const CardBox: React.FC<{ info: ProjectInfo, del: (id: number, name: string) => 
     const props = {
         name: 'file',
         customRequest: async (options: any) => {
+            // todo: 上传文件是否之前不知道是否成功.如果成功返回全部.如果失败返回失败字段.所以这个传参是否需要
             let upRes: any = await pushFile(options.file, 'func', info.project_id.toString());
 
             if (upRes.code === 200) {

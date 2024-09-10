@@ -2,8 +2,8 @@
  * @Author: Lucifer
  * @Data: Do not edit
  * @LastEditors: Lucifer
- * @LastEditTime: 2024-07-16 00:52:12
- * @Description: project api
+ * @LastEditTime: 2024-09-10 17:46:05
+ * @Description: 
  */
 import { BASE_URL, axiosInstance } from "../config/HeaderInstance";
 
@@ -20,7 +20,7 @@ async function createPro(projectName: string, projectDesc: string): Promise<Data
 }
 
 async function getProjectInfo(): Promise<DataContainer<ProjectInfo>> {
-    let response: any = await axiosInstance.get(`${BASE_URL}/project/user/case/all`);
+    let response: any = await axiosInstance.get(`${BASE_URL}/project/creat/info`);
 
     return new DataContainer(response.data.code, response.data.msg, response.data.data);
 }
